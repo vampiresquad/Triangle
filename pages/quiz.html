@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity Quiz - Triangle Toolkit</title>
+    
+    <meta name="author" content="Muhammad Shourov">
+    <meta name="description" content="Test your cybersecurity and computer science knowledge with our quiz.">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        /* লোডিং স্পিনার */
+        .loader {
+            display: none;
+            margin: 1rem auto;
+            border: 4px solid var(--border-color);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* কুইজ অপশনের জন্য বাটন */
+        .answer-btn {
+            width: 100%;
+            margin-bottom: 0.5rem;
+            background-color: var(--card-background-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            text-align: left;
+        }
+        .answer-btn:hover {
+            border-color: var(--primary-color);
+        }
+        
+        /* সঠিক উত্তর দেখানোর জন্য */
+        .answer-btn.correct {
+            background-color: #28a745; /* সবুজ */
+            color: #fff;
+            border-color: #28a745;
+        }
+        
+        /* ভুল উত্তর দেখানোর জন্য */
+        .answer-btn.wrong {
+            background-color: #dc3545; /* লাল */
+            color: #fff;
+            border-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="container">
+        <nav>
+            <ul>
+                <li><a href="../index.html" class="brand">▲ Triangle</a></li>
+            </ul>
+            <ul>
+                <li>
+                    <details class="dropdown">
+                        <summary role="button">Tools Menu</summary>
+                        <ul dir="rtl">
+                            <li><a href="encoding.html">Encoding & Hashing</a></li>
+                            <li><a href="web-recon.html">Web Recon</a></li>
+                            <li><a href="network-recon.html">Network Recon</a></li>
+                            <li><a href="payloads.html">Payloads & Cheatsheets</a></li>
+                            <li><a href="generators.html">Generators & Misc</a></li>
+                            <li><a href="ctf.html">CTF & Forensics</a></li>
+                        </ul>
+                    </details>
+                </li>
+                <li><a href="quiz.html">Quiz</a></li>
+                <li><a href="../about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+
+        <article class="tool-card" id="quiz-container">
+            <h1 style="font-family: 'Fira Code', monospace; text-align: center;">Computer Science Quiz</h1>
+            
+            <div id="quiz-start">
+                <p>Test your knowledge with 10 random questions on Computer Science & Cybersecurity.</p>
+                <button id="start-quiz-btn" aria-busy="false">Start Quiz</button>
+            </div>
+
+            <div id="quiz-loader" class="loader"></div>
+
+            <div id="quiz-main" style="display: none;">
+                <div style="margin-bottom: 1rem; text-align: center;">
+                    <h3 id="question-counter">Question 1 / 10</h3>
+                    <h2 id="quiz-score" style="color: var(--primary-color);">Score: 0</h2>
+                </div>
+                
+                <h3 id="question-text" style="margin-bottom: 1.5rem;">Loading question...</h3>
+                
+                <div id="answer-buttons" class="grid">
+                    </div>
+
+                <p id="feedback-text" style="text-align: center; font-weight: bold; margin-top: 1rem;"></p>
+                <button id="next-question-btn" style="display: none; margin-top: 1rem;">Next Question</button>
+            </div>
+
+            <div id="quiz-end" style="display: none; text-align: center;">
+                <h2>Quiz Complete!</h2>
+                <h3 id="final-score" style="color: var(--primary-color); font-size: 2rem;">Your Score: 0 / 10</h3>
+                <button id="restart-quiz-btn">Play Again</button>
+            </div>
+            
+        </article>
+
+    </main>
+
+    <footer class="container">
+        <div class="social-links">
+            <a href="https://github.com/vampiresquad" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a href="https://vampiresquad.github.io/Muhammad_Shourov/index.html" target="_blank" title="Portfolio"><i class="fa-solid fa-globe"></i></a>
+            <a href="https://www.facebook.com/the.devastated.writer" target="_blank" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.instagram.com/the.devastated_writer" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.threads.com/@the.devastated_writer" target="_blank" title="Threads"><i class="fa-brands fa-threads"></i></a>
+            <a href="mailto:vampiresquad.org@gmail.com" target="_blank" title="Email"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+        <p style="margin-top: 1rem;">
+            Developed with <span style="color: var(--primary-color);">♥</span> by <strong>Muhammad Shourov</strong>
+        </p>
+        <p style="font-size: 0.9rem;">Project ▲ Triangle. All tools are for educational and ethical purposes only.</p>
+    </footer>
+
+    <script src="../assets/js/quiz.js"></script>
+
+</body>
+</html>
