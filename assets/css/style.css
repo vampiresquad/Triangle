@@ -1,0 +1,186 @@
+/*
+ * Triangle - Main Stylesheet
+ * Author: Muhammad Shourov
+ * Version: 1.0.0
+*/
+
+/* 1. Global Variables (Theme Colors & Fonts) */
+:root {
+  --font-main: 'Roboto Mono', 'Consolas', monospace;
+  --font-heading: 'Fira Code', 'Courier New', monospace;
+
+  /* Professional Hacker Dark Theme */
+  --primary-color: #00ff9d; /* Bright "hacker" green */
+  --secondary-color: #00cfff; /* Bright cyan */
+  --background-color: #0b1118; /* Very dark blue */
+  --card-background-color: #121a23; /* Dark card background */
+  --text-color: #e0e0e0; /* Light grey text */
+  --heading-color: #ffffff; /* Pure white headings */
+  --muted-color: #8899a6; /* Muted grey for descriptions */
+  --border-color: #2a3b4c; /* Dark border color */
+}
+
+/* 2. Pico.css Framework Overrides (Force Dark Mode) */
+html {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--font-main);
+  /* Force dark theme for pico */
+  --pico-background-color: var(--background-color);
+  --pico-color: var(--text-color);
+  --pico-card-background-color: var(--card-background-color);
+  --pico-card-border-color: var(--border-color);
+  --pico-primary: var(--primary-color);
+  --pico-primary-hover: #fff;
+  --pico-primary-focus: rgba(0, 255, 157, 0.25);
+  --pico-primary-inverse: #0b1118;
+  --pico-font-family: var(--font-main);
+  --pico-h1-color: var(--heading-color);
+  --pico-h2-color: var(--heading-color);
+  --pico-h3-color: var(--heading-color);
+  --pico-h4-color: var(--heading-color);
+  --pico-h5-color: var(--heading-color);
+  --pico-h6-color: var(--heading-color);
+  --pico-muted-color: var(--muted-color);
+  --pico-border-color: var(--border-color);
+  --pico-form-element-background-color: #0b1118;
+  --pico-form-element-border-color: var(--border-color);
+  --pico-form-element-active-border-color: var(--primary-color);
+  --pico-form-element-focus-color: var(--primary-color);
+  --pico-dropdown-background-color: var(--card-background-color);
+  --pico-dropdown-border-color: var(--border-color);
+  --pico-dropdown-hover-background-color: #0b1118;
+  --pico-nav-background-color: var(--card-background-color);
+  --pico-nav-border-color: var(--border-color);
+}
+
+/* 3. Main Layout & Typography */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-main);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--heading-color);
+}
+
+/* 4. Header & Navigation Bar */
+nav {
+  padding: 1rem 1.5rem;
+}
+
+nav ul li a {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+nav ul li a:hover,
+nav ul li a:focus {
+  background-color: transparent;
+  color: var(--primary-color);
+}
+
+/* Text-based Logo */
+nav .brand {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  text-decoration: none;
+  padding-left: 0;
+}
+nav .brand:hover {
+  color: #fff;
+  background-color: transparent;
+}
+
+/* Mobile Dropdown Menu */
+.dropdown ul {
+  background-color: var(--card-background-color);
+  border: 1px solid var(--border-color);
+  width: 250px; /* Wider dropdown */
+}
+
+/* 5. Tool Card (Main UI element) */
+.tool-card {
+  background-color: var(--card-background-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.tool-card:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 6px 16px rgba(0, 255, 157, 0.1);
+}
+
+.tool-card h2, .tool-card h3 {
+  font-family: var(--font-heading);
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 10px;
+  margin-top: 0;
+}
+
+/* 6. Form Elements (Inputs, Buttons) */
+button, input[type="submit"] {
+  font-weight: 700;
+  font-family: var(--font-heading);
+  padding: 10px 20px;
+  transition: all 0.2s ease;
+}
+
+button:hover, input[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 255, 157, 0.2);
+}
+
+/* 7. Footer */
+footer {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background-color: var(--card-background-color);
+  border-top: 1px solid var(--border-color);
+  margin-top: 3rem;
+  color: var(--muted-color);
+}
+
+footer .social-links {
+  margin-bottom: 1.5rem;
+}
+
+footer .social-links a {
+  color: var(--muted-color);
+  text-decoration: none;
+  font-size: 1.5rem; /* Icon size */
+  margin: 0 12px;
+  transition: color 0.3s ease;
+}
+
+footer .social-links a:hover {
+  color: var(--primary-color);
+}
+
+/* 8. Result/Output Box */
+pre {
+  background-color: #0b1118;
+  border: 1px solid var(--border-color);
+  padding: 1rem;
+  border-radius: 6px;
+  overflow-x: auto; /* Allow horizontal scroll */
+  color: var(--text-color);
+  font-family: 'Courier New', Courier, monospace;
+  white-space: pre-wrap; /* Wrap long lines */
+  word-wrap: break-word;
+}
