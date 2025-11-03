@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTF & Forensics - Triangle Toolkit</title>
+    
+    <meta name="author" content="Muhammad Shourov">
+    <meta name="description" content="Tools for CTF and Forensics: Classic Ciphers, EXIF Data Viewer, and File Strings Extractor.">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+    <header class="container">
+        <nav>
+            <ul>
+                <li><a href="../index.html" class="brand">▲ Triangle</a></li>
+            </ul>
+            <ul>
+                <li>
+                    <details class="dropdown">
+                        <summary role="button">Tools Menu</summary>
+                        <ul dir="rtl">
+                            <li><a href="encoding.html">Encoding & Hashing</a></li>
+                            <li><a href="web-recon.html">Web Recon</a></li>
+                            <li><a href="network-recon.html">Network Recon</a></li>
+                            <li><a href="payloads.html">Payloads & Cheatsheets</a></li>
+                            <li><a href="generators.html">Generators & Misc</a></li>
+                            <li><a href="ctf.html">CTF & Forensics</a></li>
+                        </ul>
+                    </details>
+                </li>
+                <li><a href="quiz.html">Quiz</a></li>
+                <li><a href="../about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+
+        <h1 style="font-family: 'Fira Code', monospace; text-align: center; margin-bottom: 2rem;">CTF & Forensics</h1>
+
+        <article class="tool-card">
+            <h2>Classic Cipher Tool</h2>
+            <p>Decode/Encode text using common CTF ciphers like Caesar and ROT13.</p>
+            
+            <label for="cipher-input">Input Text:</label>
+            <textarea id="cipher-input" rows="5" placeholder="Uryyb Jbeyq!"></textarea>
+            
+            <label for="cipher-type">Cipher:</label>
+            <select id="cipher-type">
+                <option value="rot13" selected>ROT13</option>
+                <option value="caesar">Caesar (Shift 1-25)</option>
+            </select>
+            
+            <label for="caesar-shift" id="caesar-shift-label" style="display: none; margin-top: 1rem;">Shift (1-25):</label>
+            <input type="number" id="caesar-shift" value="13" min="1" max="25" style="display: none;">
+
+            <div class="grid" style="--grid-cols: 2; gap: 1rem; margin-top: 1rem;">
+                <button id="cipher-encode-btn">Encode</button>
+                <button id="cipher-decode-btn" class="secondary">Decode</button>
+            </div>
+
+            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Output:</h4>
+            <pre id="cipher-output"></pre>
+        </article>
+        
+        <article class="tool-card">
+            <h2>Image EXIF Data Viewer</h2>
+            <p>Upload a JPEG image to extract and view its hidden metadata (EXIF data).</p>
+            
+            <label for="exif-file-input">Upload Image (JPEG):</label>
+            <input type="file" id="exif-file-input" accept="image/jpeg">
+            
+            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">EXIF Data:</h4>
+            <pre id="exif-output">(Upload an image to see its metadata)</pre>
+        </article>
+
+        <article class="tool-card">
+            <h2>'strings' Extractor</h2>
+            <p>Upload any file to extract all human-readable text strings (Min. 4 chars).</p>
+            
+            <label for="strings-file-input">Upload Any File:</label>
+            <input type="file" id="strings-file-input">
+            
+            <button id="strings-extract-btn" aria-busy="false" style="margin-top: 1rem;">Extract Strings</button>
+            
+            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Found Strings:</h4>
+            <textarea id="strings-output" rows="15" readonly placeholder="Readable strings will appear here..."></textarea>
+        </article>
+
+    </main>
+
+    <footer class="container">
+        <div class="social-links">
+            <a href="https://github.com/vampiresquad" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a href="https://vampiresquad.github.io/Muhammad_Shourov/index.html" target="_blank" title="Portfolio"><i class="fa-solid fa-globe"></i></a>
+            <a href="https://www.facebook.com/the.devastated.writer" target="_blank" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.instagram.com/the.devastated_writer" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.threads.com/@the.devastated_writer" target="_blank" title="Threads"><i class="fa-brands fa-threads"></i></a>
+            <a href="mailto:vampiresquad.org@gmail.com" target="_blank" title="Email"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+        <p style="margin-top: 1rem;">
+            Developed with <span style="color: var(--primary-color);">♥</span> by <strong>Muhammad Shourov</strong>
+        </p>
+        <p style="font-size: 0.9rem;">Project ▲ Triangle. All tools are for educational and ethical purposes only.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js"></script>
+
+    <script src="../assets/js/ctf.js"></script>
+
+</body>
+</html>
