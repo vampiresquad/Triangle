@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generators & Misc Tools - Triangle Toolkit</title>
+    
+    <meta name="author" content="Muhammad Shourov">
+    <meta name="description" content="Wordlist Generator, Password Generator, cURL Generator, Regex Tester, JSON Formatter, and JWT Debugger.">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+    <header class="container">
+        <nav>
+            <ul>
+                <li><a href="../index.html" class="brand">▲ Triangle</a></li>
+            </ul>
+            <ul>
+                <li>
+                    <details class="dropdown">
+                        <summary role="button">Tools Menu</summary>
+                        <ul dir="rtl">
+                            <li><a href="encoding.html">Encoding & Hashing</a></li>
+                            <li><a href="web-recon.html">Web Recon</a></li>
+                            <li><a href="network-recon.html">Network Recon</a></li>
+                            <li><a href="payloads.html">Payloads & Cheatsheets</a></li>
+                            <li><a href="generators.html">Generators & Misc</a></li>
+                            <li><a href="ctf.html">CTF & Forensics</a></li>
+                        </ul>
+                    </details>
+                </li>
+                <li><a href="quiz.html">Quiz</a></li>
+                <li><a href="../about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+
+        <h1 style="font-family: 'Fira Code', monospace; text-align: center; margin-bottom: 2rem;">Generators & Misc Tools</h1>
+
+        <article class="tool-card">
+            <h2>Random String / Password Generator</h2>
+            <p>Create secure, random strings or passwords.</p>
+            
+            <label for="pass-length">Length:</label>
+            <input type="number" id="pass-length" value="16" min="4" max="128">
+            
+            <fieldset class="grid" style="--grid-cols: 2; gap: 1rem;">
+                <label for="pass-uppercase">
+                    <input type="checkbox" id="pass-uppercase" checked> Uppercase (A-Z)
+                </label>
+                <label for="pass-lowercase">
+                    <input type="checkbox" id="pass-lowercase" checked> Lowercase (a-z)
+                </label>
+                <label for="pass-numbers">
+                    <input type="checkbox" id="pass-numbers" checked> Numbers (0-9)
+                </label>
+                <label for="pass-symbols">
+                    <input type="checkbox" id="pass-symbols" checked> Symbols (!@#$)
+                </label>
+            </fieldset>
+            
+            <button id="pass-generate-btn">Generate</button>
+            
+            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Result:</h4>
+            <input type="text" id="pass-output" readonly placeholder="Your generated password will appear here...">
+        </article>
+
+        <article class="tool-card">
+            <h2>Wordlist Generator</h2>
+            <p>Create a custom wordlist based on keywords and combinations. (Note: Large lists may be slow in-browser).</p>
+            
+            <label for="wordlist-keywords">Keywords (comma separated):</label>
+            <input type="text" id="wordlist-keywords" placeholder="admin, pass, 123, !">
+            
+            <label for="wordlist-length">Max Combination Length (e.g., 3 = adminpass123):</label>
+            <input type="number" id="wordlist-length" value="3" min="2" max="5">
+
+            <button id="wordlist-generate-btn">Generate Wordlist</button>
+            
+            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Result:</h4>
+            <textarea id="wordlist-output" rows="10" readonly placeholder="Generated wordlist will appear here..."></textarea>
+        </article>
+
+        <article class="tool-card">
+            <h2>cURL Command Generator</h2>
+            <p>Visually build a cURL command for testing endpoints.</p>
+            
+            <label for="curl-url">URL:</label>
+            <input type="url" id="curl-url" placeholder="https://api.example.com/data">
+            
+            <label for="curl-method">Request Method:</label>
+            <select id="curl-method">
+                <option value="GET" selected>GET</option>
+                <option value="POST">POST</option>
+                <option value="PUT">PUT</option>
+                <option value="DELETE">DELETE</option>
+            </select>
+            
+            <label for="curl-headers">Headers (one per line, e.g., Content-Type: application/json):</label>
+            <textarea id="curl-headers" rows="3"></textarea>
+            
+            <label for="curl-data">Data (for POST/PUT):</label>
+            <textarea id="curl-data" rows="3" placeholder='{"key": "value"}'></textarea>
+
+            <button id="curl-generate-btn">Generate Command</button>
+            
+            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Generated cURL Command:</h4>
+            <textarea id="curl-output" rows="5" readonly></textarea>
+        </article>
+        
+        <article class="tool-card">
+            <h2>Regex Tester</h2>
+            <p>Test your Regular Expressions against a block of text.</p>
+            
+            <label for="regex-input">Regular Expression (e.g., /email@[a-z]+\.com/g):</label>
+            <input type="text" id="regex-input" placeholder="/[a-zA-Z0-9]+/g">
+            
+            <label for="regex-text">Test String:</label>
+            <textarea id="regex-text" rows="7" placeholder="The quick brown fox jumps..."></textarea>
+            
+            <button id="regex-test-btn">Test Regex</button>
+
+            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Matches:</h4>
+            <pre id="regex-output">(No matches found)</pre>
+        </article>
+        
+        <article class="tool-card">
+            <h2>JSON Formatter & Validator</h2>
+            <p>Format (pretty-print) or validate your JSON data.</p>
+            
+            <label for="json-input">JSON Input:</label>
+            <textarea id="json-input" rows="10" placeholder='{"name":"Triangle","tools":25,"nested":{"key":"value"}}'></textarea>
+            
+            <button id="json-format-btn">Format / Validate</button>
+
+            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Result:</h4>
+            <pre id="json-output">(Output will appear here)</pre>
+        </article>
+
+        <article class="tool-card">
+            <h2>JWT Debugger</h2>
+            <p>Decode a JSON Web Token (JWT) to inspect its Header and Payload.</p>
+            
+            <label for="jwt-input">JWT Token:</label>
+            <textarea id="jwt-input" rows="5" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."></textarea>
+            
+            <button id="jwt-decode-btn">Decode Token</button>
+
+            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Header (Decoded):</h4>
+            <pre id="jwt-header-output">(Decoded header will appear here)</pre>
+
+            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Payload (Decoded):</h4>
+            <pre id="jwt-payload-output">(Decoded payload will appear here)</pre>
+        </article>
+        
+    </main>
+
+    <footer class="container">
+        <div class="social-links">
+            <a href="https://github.com/vampiresquad" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a href="https://vampiresquad.github.io/Muhammad_Shourov/index.html" target="_blank" title="Portfolio"><i class="fa-solid fa-globe"></i></a>
+            <a href="https://www.facebook.com/the.devastated.writer" target="_blank" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.instagram.com/the.devastated_writer" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.threads.com/@the.devastated_writer" target="_blank" title="Threads"><i class="fa-brands fa-threads"></i></a>
+            <a href="mailto:vampiresquad.org@gmail.com" target="_blank" title="Email"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+        <p style="margin-top: 1rem;">
+            Developed with <span style="color: var(--primary-color);">♥</span> by <strong>Muhammad Shourov</strong>
+        </p>
+        <p style="font-size: 0.9rem;">Project ▲ Triangle. All tools are for educational and ethical purposes only.</p>
+    </footer>
+
+    <script src="../assets/js/generators.js"></script>
+
+</body>
+</html>
