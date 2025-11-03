@@ -35,24 +35,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- *** নতুন ফাংশন শেষ *** ---
 
 
-    // --- Tool 1: Random String/Password Generator (আগের কোড) ---
+    // --- Tool 1: Random String/Password Generator (আপনার আগের কোড) ---
     try {
+        const passLength = document.getElementById('pass-length');
+        const passUpper = document.getElementById('pass-uppercase');
+        const passLower = document.getElementById('pass-lowercase');
+        const passNumbers = document.getElementById('pass-numbers');
+        const passSymbols = document.getElementById('pass-symbols');
         const passGenerateBtn = document.getElementById('pass-generate-btn');
-        passGenerateBtn.addEventListener('click', () => {
-            const passLength = document.getElementById('pass-length');
-            const passUpper = document.getElementById('pass-uppercase');
-            const passLower = document.getElementById('pass-lowercase');
-            const passNumbers = document.getElementById('pass-numbers');
-            const passSymbols = document.getElementById('pass-symbols');
-            const passOutput = document.getElementById('pass-output');
-            
-            const charsets = { /* ... (charset ডেটা অপরিবর্তিত) ... */
-                upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-                lower: 'abcdefghijklmnopqrstuvwxyz',
-                numbers: '0123456789',
-                symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?'
-            };
+        const passOutput = document.getElementById('pass-output');
 
+        const charsets = {
+            upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+            lower: 'abcdefghijklmnopqrstuvwxyz',
+            numbers: '0123456789',
+            symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?'
+        };
+
+        passGenerateBtn.addEventListener('click', () => {
             let charset = '';
             if (passUpper.checked) charset += charsets.upper;
             if (passLower.checked) charset += charsets.lower;
@@ -67,68 +67,66 @@ document.addEventListener('DOMContentLoaded', () => {
             let password = '';
             const length = parseInt(passLength.value);
             for (let i = 0; i < length; i++) {
-                password += charset[Math.floor(Math.random() * charset.length)];
+                const randomIndex = Math.floor(Math.random() * charset.length);
+                password += charset[randomIndex];
             }
             passOutput.value = password;
         });
-        
+
         // --- *** নতুন সংযোজন: কপি বাটনকে চালু করা *** ---
         setupCopyButton('pass-copy-btn', 'pass-output');
 
     } catch (e) { console.error('Password Generator tool error:', e); }
 
-    // --- Tool 2: Wordlist Generator (আগের কোড + নতুন ডাউনলোড লজিক) ---
+    // --- Tool 2: Wordlist Generator (আপনার আগের কোড + নতুন ডাউনলোড লজিক) ---
     try {
+        const wordlistKeywords = document.getElementById('wordlist-keywords');
+        const wordlistLength = document.getElementById('wordlist-length');
         const wordlistGenerateBtn = document.getElementById('wordlist-generate-btn');
-        const wordlistDownloadBtn = document.getElementById('wordlist-download-btn'); // নতুন বাটন
         const wordlistOutput = document.getElementById('wordlist-output');
+        const wordlistDownloadBtn = document.getElementById('wordlist-download-btn'); // *** নতুন সংযোজন ***
 
         wordlistGenerateBtn.addEventListener('click', () => {
-            // ... (জেনারেটরের মূল লজিক অপরিবর্তিত আছে) ...
-            const keywords = document.getElementById('wordlist-keywords').value.split(',').map(k => k.trim()).filter(k => k.length > 0);
-            const maxLength = parseInt(document.getElementById('wordlist-length').value);
+            const keywords = wordlistKeywords.value.split(',').map(k => k.trim()).filter(k => k.length > 0);
+            const maxLength = parseInt(wordlistLength.value);
             
             if (keywords.length === 0) {
                 wordlistOutput.value = 'Error: Please enter at least one keyword.';
                 return;
             }
 
-            wordlistGenerateBtn.setAttribute('aria-busy', 'true');
-            wordlistDownloadBtn.disabled = true; // --- নতুন সংযোজন ---
-            wordlistOutput.value = 'Generating... (This may take a moment)';
-            
-            let results = new Set(keywords);
+            wordlistOutput.value = 'Generating...';
+            wordlistGenerateBtn.setAttribute('aria-busy', 'true'); // *** নতুন সংযোজন ***
+            wordlistDownloadBtn.disabled = true; // *** নতুন সংযোজন ***
+            let results = new Set(keywords); 
+
             function getPermutations(currentList, currentLength) {
                 if (currentLength > maxLength) return;
-                let newList = new Set();
+                // (আপনার আগের getPermutations ফাংশনের লজিক)
                 for (let i = 0; i < keywords.length; i++) {
                     for (let item of currentList) {
                         if (currentLength + 1 <= maxLength) {
-                            const newItem = item + keywords[i];
-                            if (!results.has(newItem)) {
-                                results.add(newItem);
-                                newList.add(newItem);
-                            }
+                            results.add(item + keywords[i]);
                         }
                     }
                 }
-                if (newList.size > 0 && currentLength + 1 < maxLength) {
-                    getPermutations(newList, currentLength + 1);
+                if (currentLength + 1 <= maxLength) {
+                    getPermutations(Array.from(results), currentLength + 1);
                 }
             }
             
             setTimeout(() => {
-                getPermutations(new Set(keywords), 1);
+                getPermutations(keywords, 1);
                 wordlistOutput.value = Array.from(results).join('\n');
-                wordlistGenerateBtn.setAttribute('aria-busy', 'false');
-                wordlistDownloadBtn.disabled = false; // --- নতুন সংযোজন: ডাউনলোড বাটন সচল করা ---
+                wordlistGenerateBtn.setAttribute('aria-busy', 'false'); // *** নতুন সংযোজন ***
+                wordlistDownloadBtn.disabled = false; // *** নতুন সংযোজন ***
             }, 50);
         });
 
         // --- *** নতুন সংযোজন: ডাউনলোড বাটনের লজিক *** ---
         wordlistDownloadBtn.addEventListener('click', () => {
             const text = wordlistOutput.value;
-            if (!text || text.startsWith('Generating...')) {
+            if (!text || text === 'Generating...') {
                 alert('Please generate a wordlist first.');
                 return;
             }
@@ -142,51 +140,59 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         });
+        // --- *** নতুন সংযোজন শেষ *** ---
 
     } catch (e) { console.error('Wordlist Generator tool error:', e); }
 
-    // --- Tool 3: cURL Command Generator (আগের কোড) ---
+    // --- Tool 3: cURL Command Generator (আপনার আগের কোড) ---
     try {
+        const curlUrl = document.getElementById('curl-url');
+        const curlMethod = document.getElementById('curl-method');
+        const curlHeaders = document.getElementById('curl-headers');
+        const curlData = document.getElementById('curl-data');
         const curlGenerateBtn = document.getElementById('curl-generate-btn');
+        const curlOutput = document.getElementById('curl-output');
+
         curlGenerateBtn.addEventListener('click', () => {
-            // ... (cURL জেনারেটরের মূল লজিক অপরিবর্তিত আছে) ...
-            const curlUrl = document.getElementById('curl-url');
-            const curlMethod = document.getElementById('curl-method');
-            const curlHeaders = document.getElementById('curl-headers');
-            const curlData = document.getElementById('curl-data');
-            const curlOutput = document.getElementById('curl-output');
             let command = 'curl';
             const url = curlUrl.value;
-            if (!url) { curlOutput.value = 'Error: URL is required.'; return; }
+            if (!url) {
+                curlOutput.value = 'Error: URL is required.';
+                return;
+            }
             command += ` -X ${curlMethod.value}`;
             command += ` "${url}"`;
             curlHeaders.value.split('\n').forEach(header => {
-                if (header.trim()) { command += ` \\\n  -H "${header.trim()}"`; }
+                if (header.trim()) {
+                    command += ` \\\n  -H "${header.trim()}"`;
+                }
             });
             if (curlData.value.trim() && (curlMethod.value === 'POST' || curlMethod.value === 'PUT')) {
                 command += ` \\\n  -d '${curlData.value.trim()}'`;
             }
             curlOutput.value = command;
         });
-        
+
         // --- *** নতুন সংযোজন: কপি বাটনকে চালু করা *** ---
         setupCopyButton('curl-copy-btn', 'curl-output');
 
     } catch (e) { console.error('cURL Generator tool error:', e); }
 
-    // --- Tool 4: Regex Tester (আগের কোড) ---
+    // --- Tool 4: Regex Tester (আপনার আগের কোড) ---
     try {
+        const regexInput = document.getElementById('regex-input');
+        const regexText = document.getElementById('regex-text');
         const regexTestBtn = document.getElementById('regex-test-btn');
+        const regexOutput = document.getElementById('regex-output');
+
         regexTestBtn.addEventListener('click', () => {
-            // ... (Regex টেস্টারের মূল লজিক অপরিবর্তিত আছে) ...
-            const regexInput = document.getElementById('regex-input');
-            const regexText = document.getElementById('regex-text');
-            const regexOutput = document.getElementById('regex-output');
             try {
                 const regexPattern = regexInput.value;
                 const text = regexText.value;
                 const parts = regexPattern.match(/^\/(.*)\/([gimsuy]*)$/);
-                if (!parts) { throw new Error("Invalid Regex format. Use /pattern/flags."); }
+                if (!parts) {
+                    throw new Error("Invalid Regex format. Use /pattern/flags (e.g., /hello/g).");
+                }
                 const regex = new RegExp(parts[1], parts[2]);
                 const matches = text.match(regex);
                 if (matches) {
@@ -198,19 +204,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 regexOutput.textContent = 'Regex Error: ' + e.message;
             }
         });
-        
+
         // --- *** নতুন সংযোজন: কপি বাটনকে চালু করা *** ---
         setupCopyButton('regex-copy-btn', 'regex-output');
 
     } catch (e) { console.error('Regex Tester tool error:', e); }
 
-    // --- Tool 5: JSON Formatter (আগের কোড) ---
+    // --- Tool 5: JSON Formatter (আপনার আগের কোড) ---
     try {
+        const jsonInput = document.getElementById('json-input');
         const jsonFormatBtn = document.getElementById('json-format-btn');
+        const jsonOutput = document.getElementById('json-output');
+
         jsonFormatBtn.addEventListener('click', () => {
-            // ... (JSON ফরম্যাটারের মূল লজিক অপরিবর্তিত আছে) ...
-            const jsonInput = document.getElementById('json-input');
-            const jsonOutput = document.getElementById('json-output');
             try {
                 const parsed = JSON.parse(jsonInput.value);
                 jsonOutput.textContent = JSON.stringify(parsed, null, 2);
@@ -220,24 +226,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 jsonOutput.style.color = '#ff6b6b';
             }
         });
-        
+
         // --- *** নতুন সংযোজন: কপি বাটনকে চালু করা *** ---
         setupCopyButton('json-copy-btn', 'json-output');
 
     } catch (e) { console.error('JSON Formatter tool error:', e); }
     
-    // --- Tool 6: JWT Debugger (আগের কোড) ---
+    // --- Tool 6: JWT Debugger (আপনার আগের কোড) ---
     try {
+        const jwtInput = document.getElementById('jwt-input');
         const jwtDecodeBtn = document.getElementById('jwt-decode-btn');
+        const jwtHeaderOutput = document.getElementById('jwt-header-output');
+        const jwtPayloadOutput = document.getElementById('jwt-payload-output');
+
         jwtDecodeBtn.addEventListener('click', () => {
-            // ... (JWT ডিকোডারের মূল লজিক অপরিবর্তিত আছে) ...
-            const jwtInput = document.getElementById('jwt-input');
-            const jwtHeaderOutput = document.getElementById('jwt-header-output');
-            const jwtPayloadOutput = document.getElementById('jwt-payload-output');
             try {
                 const token = jwtInput.value.trim();
                 const parts = token.split('.');
-                if (parts.length !== 3) { throw new Error('Invalid JWT format.'); }
+                if (parts.length !== 3) {
+                    throw new Error('Invalid JWT format. Expected 3 parts separated by dots.');
+                }
                 const header = JSON.parse(atob(parts[0].replace(/-/g, '+').replace(/_/g, '/')));
                 jwtHeaderOutput.textContent = JSON.stringify(header, null, 2);
                 jwtHeaderOutput.style.color = 'var(--text-color)';
@@ -251,8 +259,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 jwtPayloadOutput.style.color = '#ff6b6b';
             }
         });
-        
-        // --- *** নতুন সংযোজন: কপি বাটনগুলোকে চালু করা *** ---
+
+        // --- *** নতুন সংযোজন: কপি বাটনকে চালু করা *** ---
         setupCopyButton('jwt-header-copy-btn', 'jwt-header-output');
         setupCopyButton('jwt-payload-copy-btn', 'jwt-payload-output');
 
