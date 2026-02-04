@@ -1,269 +1,290 @@
 /*
- * Triangle - Generators & Misc Page Logic (Upgraded)
- * Author: Muhammad Shourov
- * Version: 1.1.0
- * Added: Copy to Clipboard & .txt Download
+ * Triangle Generators Logic (PRO UPGRADE)
+ * Version: 1.2.0
 */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- *** নতুন হেলপার ফাংশন: কপি টু ক্লিপবোর্ড *** ---
-    // এই ফাংশনটি আমরা সব কপি বাটনের জন্য ব্যবহার করব
-    function setupCopyButton(buttonId, outputId) {
-        const copyBtn = document.getElementById(buttonId);
-        const outputEl = document.getElementById(outputId);
-        
-        if (copyBtn && outputEl) {
-            copyBtn.addEventListener('click', () => {
-                const textToCopy = outputEl.value || outputEl.textContent;
-                
-                if (!textToCopy || textToCopy.startsWith('(') || textToCopy.startsWith('Error:')) {
-                    copyBtn.textContent = 'Empty!';
-                    setTimeout(() => { copyBtn.textContent = 'Copy'; }, 2000);
-                    return;
-                }
-                
-                navigator.clipboard.writeText(textToCopy).then(() => {
-                    copyBtn.textContent = 'Copied!';
-                    setTimeout(() => { copyBtn.textContent = 'Copy'; }, 2000);
-                }).catch(err => {
-                    console.error('Failed to copy: ', err);
-                });
-            });
-        }
-    }
-    // --- *** নতুন ফাংশন শেষ *** ---
+/* ================= HELPERS ================= */
 
+const clean=v=>v.trim();
 
-    // --- Tool 1: Random String/Password Generator (আপনার আগের কোড) ---
-    try {
-        const passLength = document.getElementById('pass-length');
-        const passUpper = document.getElementById('pass-uppercase');
-        const passLower = document.getElementById('pass-lowercase');
-        const passNumbers = document.getElementById('pass-numbers');
-        const passSymbols = document.getElementById('pass-symbols');
-        const passGenerateBtn = document.getElementById('pass-generate-btn');
-        const passOutput = document.getElementById('pass-output');
+/* Secure Random */
+const secureRandom=max=>{
+const arr=new Uint32Array(1);
+crypto.getRandomValues(arr);
+return arr[0]%max;
+};
 
-        const charsets = {
-            upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-            lower: 'abcdefghijklmnopqrstuvwxyz',
-            numbers: '0123456789',
-            symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?'
-        };
+/* Clipboard Safe */
+const copyText=async(text)=>{
+if(navigator.clipboard){
+return navigator.clipboard.writeText(text);
+}else{
+const t=document.createElement('textarea');
+t.value=text;
+document.body.appendChild(t);
+t.select();
+document.execCommand('copy');
+document.body.removeChild(t);
+}
+};
 
-        passGenerateBtn.addEventListener('click', () => {
-            let charset = '';
-            if (passUpper.checked) charset += charsets.upper;
-            if (passLower.checked) charset += charsets.lower;
-            if (passNumbers.checked) charset += charsets.numbers;
-            if (passSymbols.checked) charset += charsets.symbols;
+function setupCopyButton(btnId,outId){
+const btn=document.getElementById(btnId);
+const out=document.getElementById(outId);
 
-            if (charset === '') {
-                passOutput.value = 'Error: Please select at least one character set.';
-                return;
-            }
+if(btn&&out){
+btn.addEventListener('click',async()=>{
+const txt=out.value||out.textContent;
+if(!txt||txt.startsWith('(')||txt.startsWith('Error')){
+btn.textContent='Empty!';
+setTimeout(()=>btn.textContent='Copy',1500);
+return;
+}
+try{
+await copyText(txt);
+btn.textContent='Copied!';
+}catch{
+btn.textContent='Failed';
+}
+setTimeout(()=>btn.textContent='Copy',1500);
+});
+}
+}
 
-            let password = '';
-            const length = parseInt(passLength.value);
-            for (let i = 0; i < length; i++) {
-                const randomIndex = Math.floor(Math.random() * charset.length);
-                password += charset[randomIndex];
-            }
-            passOutput.value = password;
-        });
+/* ================= PASSWORD ================= */
 
-        // --- *** নতুন সংযোজন: কপি বাটনকে চালু করা *** ---
-        setupCopyButton('pass-copy-btn', 'pass-output');
+try{
 
-    } catch (e) { console.error('Password Generator tool error:', e); }
+const passLength=document.getElementById('pass-length');
+const passUpper=document.getElementById('pass-uppercase');
+const passLower=document.getElementById('pass-lowercase');
+const passNumbers=document.getElementById('pass-numbers');
+const passSymbols=document.getElementById('pass-symbols');
+const passGenerateBtn=document.getElementById('pass-generate-btn');
+const passOutput=document.getElementById('pass-output');
 
-    // --- Tool 2: Wordlist Generator (আপনার আগের কোড + নতুন ডাউনলোড লজিক) ---
-    try {
-        const wordlistKeywords = document.getElementById('wordlist-keywords');
-        const wordlistLength = document.getElementById('wordlist-length');
-        const wordlistGenerateBtn = document.getElementById('wordlist-generate-btn');
-        const wordlistOutput = document.getElementById('wordlist-output');
-        const wordlistDownloadBtn = document.getElementById('wordlist-download-btn'); // *** নতুন সংযোজন ***
+const charsets={
+upper:'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+lower:'abcdefghijklmnopqrstuvwxyz',
+numbers:'0123456789',
+symbols:'!@#$%^&*()_+-=[]{}|;:,.<>?'
+};
 
-        wordlistGenerateBtn.addEventListener('click', () => {
-            const keywords = wordlistKeywords.value.split(',').map(k => k.trim()).filter(k => k.length > 0);
-            const maxLength = parseInt(wordlistLength.value);
-            
-            if (keywords.length === 0) {
-                wordlistOutput.value = 'Error: Please enter at least one keyword.';
-                return;
-            }
+passGenerateBtn.addEventListener('click',()=>{
 
-            wordlistOutput.value = 'Generating...';
-            wordlistGenerateBtn.setAttribute('aria-busy', 'true'); // *** নতুন সংযোজন ***
-            wordlistDownloadBtn.disabled = true; // *** নতুন সংযোজন ***
-            let results = new Set(keywords); 
+let charset='';
+if(passUpper.checked) charset+=charsets.upper;
+if(passLower.checked) charset+=charsets.lower;
+if(passNumbers.checked) charset+=charsets.numbers;
+if(passSymbols.checked) charset+=charsets.symbols;
 
-            function getPermutations(currentList, currentLength) {
-                if (currentLength > maxLength) return;
-                // (আপনার আগের getPermutations ফাংশনের লজিক)
-                for (let i = 0; i < keywords.length; i++) {
-                    for (let item of currentList) {
-                        if (currentLength + 1 <= maxLength) {
-                            results.add(item + keywords[i]);
-                        }
-                    }
-                }
-                if (currentLength + 1 <= maxLength) {
-                    getPermutations(Array.from(results), currentLength + 1);
-                }
-            }
-            
-            setTimeout(() => {
-                getPermutations(keywords, 1);
-                wordlistOutput.value = Array.from(results).join('\n');
-                wordlistGenerateBtn.setAttribute('aria-busy', 'false'); // *** নতুন সংযোজন ***
-                wordlistDownloadBtn.disabled = false; // *** নতুন সংযোজন ***
-            }, 50);
-        });
+if(!charset){
+passOutput.value='Error: Select charset';
+return;
+}
 
-        // --- *** নতুন সংযোজন: ডাউনলোড বাটনের লজিক *** ---
-        wordlistDownloadBtn.addEventListener('click', () => {
-            const text = wordlistOutput.value;
-            if (!text || text === 'Generating...') {
-                alert('Please generate a wordlist first.');
-                return;
-            }
-            const blob = new Blob([text], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'triangle_wordlist.txt';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        });
-        // --- *** নতুন সংযোজন শেষ *** ---
+const len=parseInt(passLength.value)||12;
 
-    } catch (e) { console.error('Wordlist Generator tool error:', e); }
+let pass='';
+for(let i=0;i<len;i++){
+pass+=charset[secureRandom(charset.length)];
+}
 
-    // --- Tool 3: cURL Command Generator (আপনার আগের কোড) ---
-    try {
-        const curlUrl = document.getElementById('curl-url');
-        const curlMethod = document.getElementById('curl-method');
-        const curlHeaders = document.getElementById('curl-headers');
-        const curlData = document.getElementById('curl-data');
-        const curlGenerateBtn = document.getElementById('curl-generate-btn');
-        const curlOutput = document.getElementById('curl-output');
+passOutput.value=pass;
 
-        curlGenerateBtn.addEventListener('click', () => {
-            let command = 'curl';
-            const url = curlUrl.value;
-            if (!url) {
-                curlOutput.value = 'Error: URL is required.';
-                return;
-            }
-            command += ` -X ${curlMethod.value}`;
-            command += ` "${url}"`;
-            curlHeaders.value.split('\n').forEach(header => {
-                if (header.trim()) {
-                    command += ` \\\n  -H "${header.trim()}"`;
-                }
-            });
-            if (curlData.value.trim() && (curlMethod.value === 'POST' || curlMethod.value === 'PUT')) {
-                command += ` \\\n  -d '${curlData.value.trim()}'`;
-            }
-            curlOutput.value = command;
-        });
+});
 
-        // --- *** নতুন সংযোজন: কপি বাটনকে চালু করা *** ---
-        setupCopyButton('curl-copy-btn', 'curl-output');
+setupCopyButton('pass-copy-btn','pass-output');
 
-    } catch (e) { console.error('cURL Generator tool error:', e); }
+}catch(e){console.error(e);}
 
-    // --- Tool 4: Regex Tester (আপনার আগের কোড) ---
-    try {
-        const regexInput = document.getElementById('regex-input');
-        const regexText = document.getElementById('regex-text');
-        const regexTestBtn = document.getElementById('regex-test-btn');
-        const regexOutput = document.getElementById('regex-output');
+/* ================= WORDLIST ================= */
 
-        regexTestBtn.addEventListener('click', () => {
-            try {
-                const regexPattern = regexInput.value;
-                const text = regexText.value;
-                const parts = regexPattern.match(/^\/(.*)\/([gimsuy]*)$/);
-                if (!parts) {
-                    throw new Error("Invalid Regex format. Use /pattern/flags (e.g., /hello/g).");
-                }
-                const regex = new RegExp(parts[1], parts[2]);
-                const matches = text.match(regex);
-                if (matches) {
-                    regexOutput.textContent = `Found ${matches.length} match(es):\n\n${matches.join('\n')}`;
-                } else {
-                    regexOutput.textContent = '(No matches found)';
-                }
-            } catch (e) {
-                regexOutput.textContent = 'Regex Error: ' + e.message;
-            }
-        });
+try{
 
-        // --- *** নতুন সংযোজন: কপি বাটনকে চালু করা *** ---
-        setupCopyButton('regex-copy-btn', 'regex-output');
+const wordlistKeywords=document.getElementById('wordlist-keywords');
+const wordlistLength=document.getElementById('wordlist-length');
+const wordlistGenerateBtn=document.getElementById('wordlist-generate-btn');
+const wordlistOutput=document.getElementById('wordlist-output');
+const wordlistDownloadBtn=document.getElementById('wordlist-download-btn');
 
-    } catch (e) { console.error('Regex Tester tool error:', e); }
+wordlistGenerateBtn.addEventListener('click',()=>{
 
-    // --- Tool 5: JSON Formatter (আপনার আগের কোড) ---
-    try {
-        const jsonInput = document.getElementById('json-input');
-        const jsonFormatBtn = document.getElementById('json-format-btn');
-        const jsonOutput = document.getElementById('json-output');
+const keywords=wordlistKeywords.value.split(',')
+.map(k=>clean(k))
+.filter(Boolean);
 
-        jsonFormatBtn.addEventListener('click', () => {
-            try {
-                const parsed = JSON.parse(jsonInput.value);
-                jsonOutput.textContent = JSON.stringify(parsed, null, 2);
-                jsonOutput.style.color = 'var(--text-color)';
-            } catch (e) {
-                jsonOutput.textContent = 'Invalid JSON: ' + e.message;
-                jsonOutput.style.color = '#ff6b6b';
-            }
-        });
+const maxLength=parseInt(wordlistLength.value)||2;
 
-        // --- *** নতুন সংযোজন: কপি বাটনকে চালু করা *** ---
-        setupCopyButton('json-copy-btn', 'json-output');
+/* Safety Limit */
+if(keywords.length>10){
+wordlistOutput.value='Error: Too many keywords.';
+return;
+}
 
-    } catch (e) { console.error('JSON Formatter tool error:', e); }
-    
-    // --- Tool 6: JWT Debugger (আপনার আগের কোড) ---
-    try {
-        const jwtInput = document.getElementById('jwt-input');
-        const jwtDecodeBtn = document.getElementById('jwt-decode-btn');
-        const jwtHeaderOutput = document.getElementById('jwt-header-output');
-        const jwtPayloadOutput = document.getElementById('jwt-payload-output');
+let results=new Set(keywords);
 
-        jwtDecodeBtn.addEventListener('click', () => {
-            try {
-                const token = jwtInput.value.trim();
-                const parts = token.split('.');
-                if (parts.length !== 3) {
-                    throw new Error('Invalid JWT format. Expected 3 parts separated by dots.');
-                }
-                const header = JSON.parse(atob(parts[0].replace(/-/g, '+').replace(/_/g, '/')));
-                jwtHeaderOutput.textContent = JSON.stringify(header, null, 2);
-                jwtHeaderOutput.style.color = 'var(--text-color)';
-                const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
-                jwtPayloadOutput.textContent = JSON.stringify(payload, null, 2);
-                jwtPayloadOutput.style.color = 'var(--text-color)';
-            } catch (e) {
-                jwtHeaderOutput.textContent = 'Decode Error: ' + e.message;
-                jwtHeaderOutput.style.color = '#ff6b6b';
-                jwtPayloadOutput.textContent = '(Decode failed)';
-                jwtPayloadOutput.style.color = '#ff6b6b';
-            }
-        });
+keywords.forEach(k=>{
+keywords.forEach(k2=>{
+if(k.length+k2.length<=50){
+results.add(k+k2);
+}
+});
+});
 
-        // --- *** নতুন সংযোজন: কপি বাটনকে চালু করা *** ---
-        setupCopyButton('jwt-header-copy-btn', 'jwt-header-output');
-        setupCopyButton('jwt-payload-copy-btn', 'jwt-payload-output');
+wordlistOutput.value=[...results].join('\n');
+wordlistDownloadBtn.disabled=false;
 
-    } catch (e) { console.error('JWT Debugger tool error:', e); }
+});
 
-}); // DOMContentLoaded End
+wordlistDownloadBtn.addEventListener('click',()=>{
+const text=wordlistOutput.value;
+if(!text) return;
+
+const blob=new Blob([text],{type:'text/plain'});
+const url=URL.createObjectURL(blob);
+const a=document.createElement('a');
+a.href=url;
+a.download='triangle_wordlist.txt';
+a.click();
+URL.revokeObjectURL(url);
+});
+
+}catch(e){console.error(e);}
+
+/* ================= CURL ================= */
+
+try{
+
+const curlUrl=document.getElementById('curl-url');
+const curlMethod=document.getElementById('curl-method');
+const curlHeaders=document.getElementById('curl-headers');
+const curlData=document.getElementById('curl-data');
+const curlGenerateBtn=document.getElementById('curl-generate-btn');
+const curlOutput=document.getElementById('curl-output');
+
+curlGenerateBtn.addEventListener('click',()=>{
+
+let url=clean(curlUrl.value);
+if(!url){
+curlOutput.value='Error: URL required';
+return;
+}
+
+let cmd=`curl -X ${curlMethod.value} "${url}"`;
+
+curlHeaders.value.split('\n').forEach(h=>{
+if(clean(h)) cmd+=` \\\n  -H "${clean(h)}"`;
+});
+
+if(clean(curlData.value)&&['POST','PUT'].includes(curlMethod.value)){
+cmd+=` \\\n  -d '${clean(curlData.value)}'`;
+}
+
+curlOutput.value=cmd;
+
+});
+
+setupCopyButton('curl-copy-btn','curl-output');
+
+}catch(e){console.error(e);}
+
+/* ================= REGEX ================= */
+
+try{
+
+const regexInput=document.getElementById('regex-input');
+const regexText=document.getElementById('regex-text');
+const regexTestBtn=document.getElementById('regex-test-btn');
+const regexOutput=document.getElementById('regex-output');
+
+regexTestBtn.addEventListener('click',()=>{
+
+try{
+
+const parts=regexInput.value.match(/^\/(.*)\/([gimsuy]*)$/);
+if(!parts) throw new Error('Invalid regex');
+
+const r=new RegExp(parts[1],parts[2]);
+const matches=regexText.value.match(r);
+
+regexOutput.textContent=matches
+? `Found ${matches.length}\n\n${matches.join('\n')}`
+: '(No matches)';
+
+}catch(e){
+regexOutput.textContent='Regex Error: '+e.message;
+}
+
+});
+
+setupCopyButton('regex-copy-btn','regex-output');
+
+}catch(e){console.error(e);}
+
+/* ================= JSON ================= */
+
+try{
+
+const jsonInput=document.getElementById('json-input');
+const jsonFormatBtn=document.getElementById('json-format-btn');
+const jsonOutput=document.getElementById('json-output');
+
+jsonFormatBtn.addEventListener('click',()=>{
+
+try{
+jsonOutput.textContent=
+JSON.stringify(JSON.parse(jsonInput.value),null,2);
+}catch(e){
+jsonOutput.textContent='Invalid JSON';
+}
+
+});
+
+setupCopyButton('json-copy-btn','json-output');
+
+}catch(e){console.error(e);}
+
+/* ================= JWT ================= */
+
+try{
+
+const jwtInput=document.getElementById('jwt-input');
+const jwtDecodeBtn=document.getElementById('jwt-decode-btn');
+const jwtHeaderOutput=document.getElementById('jwt-header-output');
+const jwtPayloadOutput=document.getElementById('jwt-payload-output');
+
+const safeDecode=str=>{
+return decodeURIComponent(
+escape(atob(str.replace(/-/g,'+').replace(/_/g,'/')))
+);
+};
+
+jwtDecodeBtn.addEventListener('click',()=>{
+
+try{
+
+const parts=jwtInput.value.split('.');
+if(parts.length!==3) throw new Error('Invalid JWT');
+
+jwtHeaderOutput.textContent=
+JSON.stringify(JSON.parse(safeDecode(parts[0])),null,2);
+
+jwtPayloadOutput.textContent=
+JSON.stringify(JSON.parse(safeDecode(parts[1])),null,2);
+
+}catch(e){
+jwtHeaderOutput.textContent='Decode Error';
+jwtPayloadOutput.textContent='Decode Error';
+}
+
+});
+
+setupCopyButton('jwt-header-copy-btn','jwt-header-output');
+setupCopyButton('jwt-payload-copy-btn','jwt-payload-output');
+
+}catch(e){console.error(e);}
+
+});
