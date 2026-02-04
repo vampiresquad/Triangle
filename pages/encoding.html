@@ -1,147 +1,207 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encoding & Hashing - Triangle Toolkit</title>
-    
-    <meta name="author" content="Muhammad Shourov">
-    <meta name="description" content="Encode, decode, and hash text with Base64, URL, Hex, MD5, SHA1, SHA256, and SHA512.">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="../assets/css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<title>Encoding & Hashing — Triangle Toolkit</title>
+
+<meta name="author" content="Muhammad Shourov">
+<meta name="description" content="Encode, decode, and hash text using Base64, URL, Hex, MD5, SHA1, SHA256, and SHA512 tools.">
+
+<link rel="canonical" href="https://vampiresquad.github.io/Triangle/pages/encoding.html">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Encoding & Hashing — Triangle Toolkit">
+<meta property="og:description" content="Browser based encoding and hashing toolkit for security learning.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vampiresquad.github.io/Triangle/pages/encoding.html">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary">
+
+<!-- Pico CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Main CSS -->
+<link rel="stylesheet" href="../assets/css/style.css">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
+
 <body>
 
-    <header class="container">
-        <nav>
-            <ul>
-                <li><a href="../index.html" class="brand">▲ Triangle</a></li>
-            </ul>
-            <ul>
-                <li>
-                    <details class="dropdown">
-                        <summary role="button">Tools Menu</summary>
-                        <ul dir="rtl">
-                            <li><a href="encoding.html">Encoding & Hashing</a></li>
-                            <li><a href="web-recon.html">Web Recon</a></li>
-                            <li><a href="network-recon.html">Network Recon</a></li>
-                            <li><a href="payloads.html">Payloads & Cheatsheets</a></li>
-                            <li><a href="generators.html">Generators & Misc</a></li>
-                            <li><a href="ctf.html">CTF & Forensics</a></li>
-                        </ul>
-                    </details>
-                </li>
-                <li><a href="quiz.html">Quiz</a></li>
-                <li><a href="../about.html">About</a></li> </ul>
-        </nav>
-    </header>
+<header class="container">
+<nav>
 
-    <main class="container">
+<ul>
+<li>
+<a href="../index.html" class="brand" aria-label="Triangle Home">
+▲ Triangle
+</a>
+</li>
+</ul>
 
-        <h1 style="font-family: 'Fira Code', monospace; text-align: center; margin-bottom: 2rem;">Encoding & Hashing</h1>
+<ul>
 
-        <article class="tool-card">
-            <h2>Base64 Encoder / Decoder</h2>
-            <p>Encode plain text to Base64 or decode Base64 back to plain text.</p>
-            
-            <label for="base64-input">Input:</label>
-            <textarea id="base64-input" rows="5" placeholder="Type text or Base64 here..."></textarea>
-            
-            <div class="grid" style="--grid-cols: 2; gap: 1rem;">
-                <button id="base64-encode-btn">Encode to Base64</button>
-                <button id="base64-decode-btn" class="secondary">Decode from Base64</button>
-            </div>
-            
-            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Output:</h4>
-            <pre id="base64-output"></pre>
-        </article>
-        
-        <article class="tool-card">
-            <h2>URL Encoder / Decoder</h2>
-            <p>Encode text and special characters for safe use in URLs.</p>
-            
-            <label for="url-input">Input:</label>
-            <textarea id="url-input" rows="5" placeholder="Type text or URL parameters here..."></textarea>
-            
-            <div class="grid" style="--grid-cols: 2; gap: 1rem;">
-                <button id="url-encode-btn">Encode URL</button>
-                <button id="url-decode-btn" class="secondary">Decode URL</button>
-            </div>
-            
-            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Output:</h4>
-            <pre id="url-output"></pre>
-        </article>
+<li>
+<details class="dropdown">
+<summary role="button">Tools Menu</summary>
 
-        <article class="tool-card">
-            <h2>Text ⇄ Hex Encoder / Decoder</h2>
-            <p>Convert plain text to its hexadecimal representation and back.</p>
-            
-            <label for="hex-input">Input:</label>
-            <textarea id="hex-input" rows="5" placeholder="Type text or Hex code here..."></textarea>
-            
-            <div class="grid" style="--grid-cols: 2; gap: 1rem;">
-                <button id="hex-encode-btn">Text to Hex</button>
-                <button id="hex-decode-btn" class="secondary">Hex to Text</button>
-            </div>
-            
-            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Output:</h4>
-            <pre id="hex-output"></pre>
-        </article>
+<ul dir="rtl">
+<li><a href="encoding.html">Encoding & Hashing</a></li>
+<li><a href="web-recon.html">Web Recon</a></li>
+<li><a href="network-recon.html">Network Recon</a></li>
+<li><a href="payloads.html">Payloads & Cheatsheets</a></li>
+<li><a href="generators.html">Generators & Misc</a></li>
+<li><a href="ctf.html">CTF & Forensics</a></li>
+</ul>
 
-        <article class="tool-card">
-            <h2>Hash Generator</h2>
-            <p>Generate popular hashes from any text input.</p>
-            
-            <label for="hash-input">Input:</label>
-            <textarea id="hash-input" rows="5" placeholder="Type text to hash..."></textarea>
-            
-            <button id="hash-generate-btn">Generate Hashes</button>
-            
-            <div id="hash-output-container" style="margin-top: 1.5rem; display: none;">
-                <h4 style="margin-bottom: 1rem;">Generated Hashes:</h4>
-                
-                <label for="hash-md5">MD5:</label>
-                <input type="text" id="hash-md5" readonly>
-                
-                <label for="hash-sha1">SHA-1:</label>
-                <input type="text" id="hash-sha1" readonly>
-                
-                <label for="hash-sha256">SHA-256:</label>
-                <input type="text" id="hash-sha256" readonly>
-                
-                <label for="hash-sha512">SHA-512:</label>
-                <input type="text" id="hash-sha512" readonly>
-            </div>
-        </article>
+</details>
+</li>
 
-    </main>
+<li><a href="quiz.html">Quiz</a></li>
+<li><a href="../about.html">About</a></li>
 
-    <footer>
-        <div class="social-links">
-            <a href="https://github.com/vampiresquad" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
-            <a href="https://vampiresquad.github.io/Muhammad_Shourov/index.html" target="_blank" title="Portfolio"><i class="fa-solid fa-globe"></i></a>
-            <a href="https://www.facebook.com/the.devastated.writer" target="_blank" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
-            <a href="https://www.instagram.com/the.devastated_writer" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://www.threads.com/@the.devastated_writer" target="_blank" title="Threads"><i class="fa-brands fa-threads"></i></a>
-            <a href="mailto:vampiresquad.org@gmail.com" target="_blank" title="Email"><i class="fa-solid fa-envelope"></i></a>
-        </div>
-        <p style="margin-top: 1rem;">
-            Developed with <span style="color: var(--primary-color);">♥</span> by <strong>Muhammad Shourov</strong>
-        </p>
-        <p style="font-size: 0.9rem;">Project ▲ Triangle. All tools are for educational and ethical purposes only.</p>
-    </footer>
+</ul>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
-    
-    <script src="../assets/js/encoding.js"></script>
+</nav>
+</header>
+
+<main class="container">
+
+<h1 class="page-title">Encoding & Hashing</h1>
+
+<!-- Base64 -->
+<article class="tool-card">
+
+<h2>Base64 Encoder / Decoder</h2>
+<p>Encode plain text to Base64 or decode Base64 back to plain text.</p>
+
+<label for="base64-input">Input:</label>
+<textarea id="base64-input" rows="5" placeholder="Type text or Base64 here..."></textarea>
+
+<div class="grid" style="--grid-cols:2;gap:1rem;">
+<button id="base64-encode-btn">Encode to Base64</button>
+<button id="base64-decode-btn" class="secondary">Decode from Base64</button>
+</div>
+
+<h4 class="output-title">Output:</h4>
+<pre id="base64-output"></pre>
+
+</article>
+
+<!-- URL -->
+<article class="tool-card">
+
+<h2>URL Encoder / Decoder</h2>
+<p>Encode text and special characters for safe use in URLs.</p>
+
+<label for="url-input">Input:</label>
+<textarea id="url-input" rows="5" placeholder="Type text or URL parameters here..."></textarea>
+
+<div class="grid" style="--grid-cols:2;gap:1rem;">
+<button id="url-encode-btn">Encode URL</button>
+<button id="url-decode-btn" class="secondary">Decode URL</button>
+</div>
+
+<h4 class="output-title">Output:</h4>
+<pre id="url-output"></pre>
+
+</article>
+
+<!-- HEX -->
+<article class="tool-card">
+
+<h2>Text ⇄ Hex Encoder / Decoder</h2>
+<p>Convert plain text to its hexadecimal representation and back.</p>
+
+<label for="hex-input">Input:</label>
+<textarea id="hex-input" rows="5" placeholder="Type text or Hex code here..."></textarea>
+
+<div class="grid" style="--grid-cols:2;gap:1rem;">
+<button id="hex-encode-btn">Text to Hex</button>
+<button id="hex-decode-btn" class="secondary">Hex to Text</button>
+</div>
+
+<h4 class="output-title">Output:</h4>
+<pre id="hex-output"></pre>
+
+</article>
+
+<!-- HASH -->
+<article class="tool-card">
+
+<h2>Hash Generator</h2>
+<p>Generate popular hashes from any text input.</p>
+
+<label for="hash-input">Input:</label>
+<textarea id="hash-input" rows="5" placeholder="Type text to hash..."></textarea>
+
+<button id="hash-generate-btn">Generate Hashes</button>
+
+<div id="hash-output-container" style="margin-top:1.5rem;display:none;">
+
+<h4 class="output-title">Generated Hashes:</h4>
+
+<label for="hash-md5">MD5:</label>
+<input type="text" id="hash-md5" readonly>
+
+<label for="hash-sha1">SHA-1:</label>
+<input type="text" id="hash-sha1" readonly>
+
+<label for="hash-sha256">SHA-256:</label>
+<input type="text" id="hash-sha256" readonly>
+
+<label for="hash-sha512">SHA-512:</label>
+<input type="text" id="hash-sha512" readonly>
+
+</div>
+
+</article>
+
+</main>
+
+<footer>
+
+<div class="social-links">
+
+<a href="https://github.com/vampiresquad" target="_blank"><i class="fa-brands fa-github"></i></a>
+
+<a href="https://vampiresquad.github.io/Muhammad_Shourov/index.html" target="_blank"><i class="fa-solid fa-globe"></i></a>
+
+<a href="https://www.facebook.com/the.devastated.writer" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+
+<a href="https://www.instagram.com/the_devastated_writer" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+
+<a href="https://www.threads.com/@the.devastated_writer" target="_blank"><i class="fa-brands fa-threads"></i></a>
+
+<a href="mailto:vampiresquad.org@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+
+</div>
+
+<p style="margin-top:1rem;">
+Developed with <span style="color:var(--primary-color);">♥</span>
+by <strong>Muhammad Shourov</strong>
+</p>
+
+<p style="font-size:0.9rem;">
+Project ▲ Triangle. All tools are for educational and ethical purposes only.
+</p>
+
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+<script src="../assets/js/encoding.js"></script>
 
 </body>
 </html>
