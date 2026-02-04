@@ -1,150 +1,213 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Reconnaissance - Triangle Toolkit</title>
-    
-    <meta name="author" content="Muhammad Shourov">
-    <meta name="description" content="Web reconnaissance tools: HTTP Header Viewer, Subdomain Finder, and URL Parser.">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="../assets/css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<title>Web Reconnaissance — Triangle Toolkit</title>
 
-    <style>
-        /* লোডিং স্পিনার দেখানোর জন্য ছোট্ট একটি স্টাইল */
-        .loader {
-            display: none; /* ডিফল্টভাবে হাইড থাকবে */
-            margin: 1rem auto;
-            border: 4px solid var(--border-color);
-            border-top: 4px solid var(--primary-color);
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+<meta name="author" content="Muhammad Shourov">
+<meta name="description" content="Web reconnaissance toolkit including HTTP Header Viewer, Subdomain Finder and URL Parser for security learning.">
+
+<link rel="canonical" href="https://vampiresquad.github.io/Triangle/pages/web-recon.html">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Web Reconnaissance — Triangle Toolkit">
+<meta property="og:description" content="Browser based web reconnaissance tools for ethical hackers and learners.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vampiresquad.github.io/Triangle/pages/web-recon.html">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../assets/css/style.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
+
 <body>
 
-    <header class="container">
-        <nav>
-            <ul>
-                <li><a href="../index.html" class="brand">▲ Triangle</a></li>
-            </ul>
-            <ul>
-                <li>
-                    <details class="dropdown">
-                        <summary role="button">Tools Menu</summary>
-                        <ul dir="rtl">
-                            <li><a href="encoding.html">Encoding & Hashing</a></li>
-                            <li><a href="web-recon.html">Web Recon</a></li>
-                            <li><a href="network-recon.html">Network Recon</a></li>
-                            <li><a href="payloads.html">Payloads & Cheatsheets</a></li>
-                            <li><a href="generators.html">Generators & Misc</a></li>
-                            <li><a href="ctf.html">CTF & Forensics</a></li>
-                        </ul>
-                    </details>
-                </li>
-                <li><a href="quiz.html">Quiz</a></li>
-                <li><a href="../about.html">About</a></li>
-            </ul>
-        </nav>
-    </header>
+<header class="container">
+<nav>
 
-    <main class="container">
+<ul>
+<li>
+<a href="../index.html" class="brand" aria-label="Triangle Home">
+▲ Triangle
+</a>
+</li>
+</ul>
 
-        <h1 style="font-family: 'Fira Code', monospace; text-align: center; margin-bottom: 2rem;">Web Reconnaissance</h1>
+<ul>
 
-        <article class="tool-card">
-            <h2>HTTP Header Viewer</h2>
-            <p>Fetch and display the response headers of any target URL. (Uses a CORS proxy).</p>
-            
-            <label for="header-input">Target URL:</label>
-            <input type="url" id="header-input" placeholder="https://example.com" required>
-            
-            <button id="header-fetch-btn" aria-busy="false">Fetch Headers</button>
-            
-            <div id="header-loader" class="loader"></div>
-            
-            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Result:</h4>
-            <pre id="header-output"></pre>
-        </article>
-        
-        <article class="tool-card">
-            <h2>Subdomain Finder</h2>
-            <p>Find public subdomains of a target domain using the crt.sh database.</p>
-            
-            <label for="subdomain-input">Target Domain:</label>
-            <input type="text" id="subdomain-input" placeholder="example.com" required>
-            
-            <button id="subdomain-fetch-btn" aria-busy="false">Find Subdomains</button>
-            
-            <div id="subdomain-loader" class="loader"></div>
-            
-            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Found Subdomains (Unique):</h4>
-            <textarea id="subdomain-output" rows="10" readonly placeholder="Results will appear here..."></textarea>
-        </article>
+<li>
+<details class="dropdown">
+<summary role="button">Tools Menu</summary>
 
-        <article class="tool-card">
-            <h2>URL Parser</h2>
-            <p>Break down any URL into its constituent parts (protocol, host, path, query, etc.).</p>
-            
-            <label for="url-parser-input">Full URL to Parse:</label>
-            <input type="url" id="url-parser-input" placeholder="https://example.com:8080/path/page.html?id=123#section">
-            
-            <button id="url-parse-btn">Parse URL</button>
-            
-            <div id="url-parser-output" style="margin-top: 1.5rem;">
-                <label for="url-protocol">Protocol:</label>
-                <input type="text" id="url-protocol" readonly>
-                
-                <label for="url-host">Hostname:</label>
-                <input type="text" id="url-host" readonly>
-                
-                <label for="url-port">Port:</label>
-                <input type="text" id="url-port" readonly>
+<ul dir="rtl">
+<li><a href="encoding.html">Encoding & Hashing</a></li>
+<li><a href="web-recon.html">Web Recon</a></li>
+<li><a href="network-recon.html">Network Recon</a></li>
+<li><a href="payloads.html">Payloads & Cheatsheets</a></li>
+<li><a href="generators.html">Generators & Misc</a></li>
+<li><a href="ctf.html">CTF & Forensics</a></li>
+</ul>
 
-                <label for="url-path">Pathname:</label>
-                <input type="text" id="url-path" readonly>
-                
-                <label for="url-query">Query String:</label>
-                <input type="text" id="url-query" readonly>
-                
-                <label for="url-fragment">Fragment/Hash:</label>
-                <input type="text" id="url-fragment" readonly>
-            </div>
-        </article>
+</details>
+</li>
 
-    </main>
+<li><a href="quiz.html">Quiz</a></li>
+<li><a href="../about.html">About</a></li>
 
-    <footer class="container">
-        <div class="social-links">
-            <a href="https://github.com/vampiresquad" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
-            <a href="https://vampiresquad.github.io/Muhammad_Shourov/index.html" target="_blank" title="Portfolio"><i class="fa-solid fa-globe"></i></a>
-            <a href="https://www.facebook.com/the.devastated.writer" target="_blank" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
-            <a href="https://www.instagram.com/the.devastated_writer" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://www.threads.com/@the.devastated_writer" target="_blank" title="Threads"><i class="fa-brands fa-threads"></i></a>
-            <a href="mailto:vampiresquad.org@gmail.com" target="_blank" title="Email"><i class="fa-solid fa-envelope"></i></a>
-        </div>
-        <p style="margin-top: 1rem;">
-            Developed with <span style="color: var(--primary-color);">♥</span> by <strong>Muhammad Shourov</strong>
-        </p>
-        <p style="font-size: 0.9rem;">Project ▲ Triangle. All tools are for educational and ethical purposes only.</p>
-    </footer>
+</ul>
 
-    <script src="../assets/js/web-recon.js"></script>
+</nav>
+</header>
+
+<main class="container">
+
+<h1 class="page-title">Web Reconnaissance</h1>
+
+<!-- HEADER VIEWER -->
+<article class="tool-card">
+
+<h2>HTTP Header Viewer</h2>
+<p>Fetch response headers of any target URL using a safe proxy.</p>
+
+<label for="header-input">Target URL:</label>
+<input type="url" id="header-input" placeholder="https://example.com" required>
+
+<button id="header-fetch-btn" aria-busy="false">
+Fetch Headers
+</button>
+
+<div id="header-loader" class="loader"></div>
+
+<h4 class="output-title">Result:</h4>
+<pre id="header-output"></pre>
+
+</article>
+
+<!-- SUBDOMAIN -->
+<article class="tool-card">
+
+<h2>Subdomain Finder</h2>
+<p>Discover public subdomains using crt.sh certificate database.</p>
+
+<label for="subdomain-input">Target Domain:</label>
+<input type="text" id="subdomain-input" placeholder="example.com" required>
+
+<button id="subdomain-fetch-btn" aria-busy="false">
+Find Subdomains
+</button>
+
+<div id="subdomain-loader" class="loader"></div>
+
+<h4 class="output-title">Found Subdomains (Unique):</h4>
+
+<textarea
+id="subdomain-output"
+rows="10"
+readonly
+placeholder="Results will appear here..."
+></textarea>
+
+</article>
+
+<!-- URL PARSER -->
+<article class="tool-card">
+
+<h2>URL Parser</h2>
+<p>Break down URL into protocol, host, path, query and fragment.</p>
+
+<label for="url-parser-input">Full URL:</label>
+<input
+type="url"
+id="url-parser-input"
+placeholder="https://example.com:8080/path/page.html?id=123#section"
+>
+
+<button id="url-parse-btn">
+Parse URL
+</button>
+
+<div id="url-parser-output" style="margin-top:1.5rem;">
+
+<label for="url-protocol">Protocol:</label>
+<input type="text" id="url-protocol" readonly>
+
+<label for="url-host">Hostname:</label>
+<input type="text" id="url-host" readonly>
+
+<label for="url-port">Port:</label>
+<input type="text" id="url-port" readonly>
+
+<label for="url-path">Pathname:</label>
+<input type="text" id="url-path" readonly>
+
+<label for="url-query">Query String:</label>
+<input type="text" id="url-query" readonly>
+
+<label for="url-fragment">Fragment / Hash:</label>
+<input type="text" id="url-fragment" readonly>
+
+</div>
+
+</article>
+
+</main>
+
+<footer class="container">
+
+<div class="social-links">
+
+<a href="https://github.com/vampiresquad" target="_blank">
+<i class="fa-brands fa-github"></i>
+</a>
+
+<a href="https://vampiresquad.github.io/Muhammad_Shourov/index.html" target="_blank">
+<i class="fa-solid fa-globe"></i>
+</a>
+
+<a href="https://www.facebook.com/the.devastated.writer" target="_blank">
+<i class="fa-brands fa-facebook"></i>
+</a>
+
+<a href="https://www.instagram.com/the_devastated_writer" target="_blank">
+<i class="fa-brands fa-instagram"></i>
+</a>
+
+<a href="https://www.threads.com/@the.devastated_writer" target="_blank">
+<i class="fa-brands fa-threads"></i>
+</a>
+
+<a href="mailto:vampiresquad.org@gmail.com">
+<i class="fa-solid fa-envelope"></i>
+</a>
+
+</div>
+
+<p style="margin-top:1rem;">
+Developed with <span style="color:var(--primary-color);">♥</span>
+by <strong>Muhammad Shourov</strong>
+</p>
+
+<p style="font-size:0.9rem;">
+Project ▲ Triangle. All tools are for educational and ethical purposes only.
+</p>
+
+</footer>
+
+<script src="../assets/js/web-recon.js"></script>
 
 </body>
 </html>
