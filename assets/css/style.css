@@ -184,3 +184,111 @@ pre {
   white-space: pre-wrap; /* Wrap long lines */
   word-wrap: break-word;
 }
+/* ================= PRO UI EXTENSION ================= */
+
+/* Subtle Background Depth */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(0,255,157,0.05), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(0,207,255,0.05), transparent 40%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Hero Section */
+.hero-section {
+  text-align: center;
+  margin-top: 3rem;
+  margin-bottom: 5rem;
+}
+
+.hero-title {
+  font-family: var(--font-heading);
+  font-size: 2.8rem;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 8px rgba(0,255,157,0.25);
+}
+
+.hero-sub {
+  font-size: 1.25rem;
+  color: var(--muted-color);
+}
+
+.hero-desc {
+  color: var(--muted-color);
+}
+
+.hero-btn {
+  margin-top: 1rem;
+  padding: 12px 28px;
+  font-size: 1.1rem;
+}
+
+/* Tool Card Pro Interaction */
+.tool-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.tool-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(0,255,157,0.05),
+    transparent
+  );
+  opacity: 0;
+  transition: 0.4s;
+}
+
+.tool-card:hover::before {
+  opacity: 1;
+}
+
+.tool-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary-color);
+  box-shadow:
+    0 0 20px rgba(0,255,157,0.08),
+    0 6px 18px rgba(0,0,0,0.4);
+}
+
+/* Hacker Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0b1118;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00ffaa;
+}
+
+/* Text Selection Branding */
+::selection {
+  background: rgba(0,255,157,0.25);
+  color: #fff;
+}
+
+/* Smooth Link Transition */
+a {
+  transition: color 0.25s ease, transform 0.2s ease;
+}
+
+a:hover {
+  transform: translateY(-1px);
+}
