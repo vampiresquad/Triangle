@@ -1,123 +1,183 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CTF & Forensics - Triangle Toolkit</title>
-    
-    <meta name="author" content="Muhammad Shourov">
-    <meta name="description" content="Tools for CTF and Forensics: Classic Ciphers, EXIF Data Viewer, and File Strings Extractor.">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="../assets/css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<title>CTF & Forensics — Triangle Toolkit</title>
+
+<meta name="author" content="Muhammad Shourov">
+<meta name="description" content="Capture The Flag and Digital Forensics tools including cipher decoding, EXIF metadata extraction and strings extraction.">
+
+<link rel="canonical" href="https://vampiresquad.github.io/Triangle/pages/ctf.html">
+
+<!-- Open Graph -->
+<meta property="og:title" content="CTF & Forensics — Triangle Toolkit">
+<meta property="og:description" content="Browser based CTF and forensic analysis tools for ethical learning.">
+<meta property="og:type" content="website">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../assets/css/style.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
+
 <body>
 
-    <header class="container">
-        <nav>
-            <ul>
-                <li><a href="../index.html" class="brand">▲ Triangle</a></li>
-            </ul>
-            <ul>
-                <li>
-                    <details class="dropdown">
-                        <summary role="button">Tools Menu</summary>
-                        <ul dir="rtl">
-                            <li><a href="encoding.html">Encoding & Hashing</a></li>
-                            <li><a href="web-recon.html">Web Recon</a></li>
-                            <li><a href="network-recon.html">Network Recon</a></li>
-                            <li><a href="payloads.html">Payloads & Cheatsheets</a></li>
-                            <li><a href="generators.html">Generators & Misc</a></li>
-                            <li><a href="ctf.html">CTF & Forensics</a></li>
-                        </ul>
-                    </details>
-                </li>
-                <li><a href="quiz.html">Quiz</a></li>
-                <li><a href="../about.html">About</a></li>
-            </ul>
-        </nav>
-    </header>
+<header class="container">
+<nav>
 
-    <main class="container">
+<ul>
+<li>
+<a href="../index.html" class="brand" aria-label="Triangle Home">
+▲ Triangle
+</a>
+</li>
+</ul>
 
-        <h1 style="font-family: 'Fira Code', monospace; text-align: center; margin-bottom: 2rem;">CTF & Forensics</h1>
+<ul>
 
-        <article class="tool-card">
-            <h2>Classic Cipher Tool</h2>
-            <p>Decode/Encode text using common CTF ciphers like Caesar and ROT13.</p>
-            
-            <label for="cipher-input">Input Text:</label>
-            <textarea id="cipher-input" rows="5" placeholder="Uryyb Jbeyq!"></textarea>
-            
-            <label for="cipher-type">Cipher:</label>
-            <select id="cipher-type">
-                <option value="rot13" selected>ROT13</option>
-                <option value="caesar">Caesar (Shift 1-25)</option>
-            </select>
-            
-            <label for="caesar-shift" id="caesar-shift-label" style="display: none; margin-top: 1rem;">Shift (1-25):</label>
-            <input type="number" id="caesar-shift" value="13" min="1" max="25" style="display: none;">
+<li>
+<details class="dropdown">
+<summary role="button">Tools Menu</summary>
 
-            <div class="grid" style="--grid-cols: 2; gap: 1rem; margin-top: 1rem;">
-                <button id="cipher-encode-btn">Encode</button>
-                <button id="cipher-decode-btn" class="secondary">Decode</button>
-            </div>
+<ul dir="rtl">
+<li><a href="encoding.html">Encoding & Hashing</a></li>
+<li><a href="web-recon.html">Web Recon</a></li>
+<li><a href="network-recon.html">Network Recon</a></li>
+<li><a href="payloads.html">Payloads & Cheatsheets</a></li>
+<li><a href="generators.html">Generators & Misc</a></li>
+<li><a href="ctf.html">CTF & Forensics</a></li>
+</ul>
 
-            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Output:</h4>
-            <pre id="cipher-output"></pre>
-        </article>
-        
-        <article class="tool-card">
-            <h2>Image EXIF Data Viewer</h2>
-            <p>Upload a JPEG image to extract and view its hidden metadata (EXIF data).</p>
-            
-            <label for="exif-file-input">Upload Image (JPEG):</label>
-            <input type="file" id="exif-file-input" accept="image/jpeg">
-            
-            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">EXIF Data:</h4>
-            <pre id="exif-output">(Upload an image to see its metadata)</pre>
-        </article>
+</details>
+</li>
 
-        <article class="tool-card">
-            <h2>'strings' Extractor</h2>
-            <p>Upload any file to extract all human-readable text strings (Min. 4 chars).</p>
-            
-            <label for="strings-file-input">Upload Any File:</label>
-            <input type="file" id="strings-file-input">
-            
-            <button id="strings-extract-btn" aria-busy="false" style="margin-top: 1rem;">Extract Strings</button>
-            
-            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Found Strings:</h4>
-            <textarea id="strings-output" rows="15" readonly placeholder="Readable strings will appear here..."></textarea>
-        </article>
+<li><a href="quiz.html">Quiz</a></li>
+<li><a href="../about.html">About</a></li>
 
-    </main>
+</ul>
 
-    <footer class="container">
-        <div class="social-links">
-            <a href="https://github.com/vampiresquad" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
-            <a href="https://vampiresquad.github.io/Muhammad_Shourov/index.html" target="_blank" title="Portfolio"><i class="fa-solid fa-globe"></i></a>
-            <a href="https://www.facebook.com/the.devastated.writer" target="_blank" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
-            <a href="https://www.instagram.com/the.devastated_writer" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://www.threads.com/@the.devastated_writer" target="_blank" title="Threads"><i class="fa-brands fa-threads"></i></a>
-            <a href="mailto:vampiresquad.org@gmail.com" target="_blank" title="Email"><i class="fa-solid fa-envelope"></i></a>
-        </div>
-        <p style="margin-top: 1rem;">
-            Developed with <span style="color: var(--primary-color);">♥</span> by <strong>Muhammad Shourov</strong>
-        </p>
-        <p style="font-size: 0.9rem;">Project ▲ Triangle. All tools are for educational and ethical purposes only.</p>
-    </footer>
+</nav>
+</header>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js"></script>
+<main class="container">
 
-    <script src="../assets/js/ctf.js"></script>
+<h1 class="page-title">CTF & Forensics</h1>
+
+<!-- CIPHER -->
+<article class="tool-card">
+
+<h2>Classic Cipher Tool</h2>
+<p>Decode or encode text using ROT13 or Caesar shift.</p>
+
+<label for="cipher-input">Input Text</label>
+<textarea id="cipher-input" rows="5"></textarea>
+
+<label for="cipher-type">Cipher Type</label>
+<select id="cipher-type">
+<option value="rot13">ROT13</option>
+<option value="caesar">Caesar</option>
+</select>
+
+<label id="caesar-shift-label" for="caesar-shift" style="display:none;">
+Shift (1-25)
+</label>
+
+<input id="caesar-shift" type="number" value="13" min="1" max="25" style="display:none;">
+
+<div class="grid">
+<button id="cipher-encode-btn">Encode</button>
+<button id="cipher-decode-btn" class="secondary">Decode</button>
+</div>
+
+<h4 class="output-title">Output</h4>
+<pre id="cipher-output"></pre>
+
+</article>
+
+<!-- EXIF -->
+<article class="tool-card">
+
+<h2>Image EXIF Data Viewer</h2>
+<p>Extract metadata from JPEG images.</p>
+
+<label for="exif-file-input">Upload JPEG Image</label>
+<input type="file" id="exif-file-input" accept="image/jpeg">
+
+<h4 class="output-title">EXIF Data</h4>
+<pre id="exif-output">(Upload image)</pre>
+
+</article>
+
+<!-- STRINGS -->
+<article class="tool-card">
+
+<h2>Strings Extractor</h2>
+<p>Extract readable ASCII strings from files.</p>
+
+<label for="strings-file-input">Upload File</label>
+<input type="file" id="strings-file-input">
+
+<button id="strings-extract-btn" aria-busy="false">
+Extract Strings
+</button>
+
+<h4 class="output-title">Found Strings</h4>
+<textarea id="strings-output" rows="15" readonly></textarea>
+
+</article>
+
+</main>
+
+<footer class="container">
+
+<div class="social-links">
+
+<a href="https://github.com/vampiresquad" target="_blank">
+<i class="fa-brands fa-github"></i>
+</a>
+
+<a href="https://vampiresquad.github.io/Muhammad_Shourov/index.html" target="_blank">
+<i class="fa-solid fa-globe"></i>
+</a>
+
+<a href="https://www.facebook.com/the.devastated.writer" target="_blank">
+<i class="fa-brands fa-facebook"></i>
+</a>
+
+<a href="https://www.instagram.com/the_devastated_writer" target="_blank">
+<i class="fa-brands fa-instagram"></i>
+</a>
+
+<a href="mailto:vampiresquad.org@gmail.com">
+<i class="fa-solid fa-envelope"></i>
+</a>
+
+</div>
+
+<p style="margin-top:1rem;">
+Developed with <span style="color:var(--primary-color);">♥</span>
+by <strong>Muhammad Shourov</strong>
+</p>
+
+<p style="font-size:.9rem;">
+Project ▲ Triangle — Educational & Ethical Security Toolkit
+</p>
+
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js"></script>
+<script src="../assets/js/ctf.js"></script>
 
 </body>
 </html>
