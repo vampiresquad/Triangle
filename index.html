@@ -149,6 +149,15 @@ Project ▲ Triangle. All tools are for educational and ethical purposes only.
 </p>
 
 </footer>
-
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/sw.js")
+      .then(() => console.log("▲ Triangle SW Registered"))
+      .catch(err => console.log("SW Error:", err));
+  });
+}
+</script>
 </body>
 </html>
