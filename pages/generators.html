@@ -1,180 +1,225 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generators & Misc Tools - Triangle Toolkit</title>
-    
-    <meta name="author" content="Muhammad Shourov">
-    <meta name="description" content="Wordlist Generator, Password Generator, cURL Generator, Regex Tester, JSON Formatter, and JWT Debugger.">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Generators & Misc Tools — Triangle Toolkit</title>
+
+<meta name="author" content="Muhammad Shourov">
+<meta name="description" content="Security utility generators including password generator, wordlist builder, cURL builder, regex tester, JSON formatter and JWT debugger.">
+
+<link rel="canonical" href="https://vampiresquad.github.io/Triangle/pages/generators.html">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../assets/css/style.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
+
 <body>
 
-    <header class="container">
-        <nav>
-            <ul>
-                <li><a href="../index.html" class="brand">▲ Triangle</a></li>
-            </ul>
-            <ul>
-                <li>
-                    <details class="dropdown">
-                        <summary role="button">Tools Menu</summary>
-                        <ul dir="rtl">
-                            <li><a href="encoding.html">Encoding & Hashing</a></li>
-                            <li><a href="web-recon.html">Web Recon</a></li>
-                            <li><a href="network-recon.html">Network Recon</a></li>
-                            <li><a href="payloads.html">Payloads & Cheatsheets</a></li>
-                            <li><a href="generators.html">Generators & Misc</a></li>
-                            <li><a href="ctf.html">CTF & Forensics</a></li>
-                        </ul>
-                    </details>
-                </li>
-                <li><a href="quiz.html">Quiz</a></li>
-                <li><a href="../about.html">About</a></li>
-            </ul>
-        </nav>
-    </header>
+<header class="container">
+<nav>
 
-    <main class="container">
+<ul>
+<li>
+<a href="../index.html" class="brand" aria-label="Triangle Home">
+▲ Triangle
+</a>
+</li>
+</ul>
 
-        <h1 style="font-family: 'Fira Code', monospace; text-align: center; margin-bottom: 2rem;">Generators & Misc Tools</h1>
+<ul>
 
-        <article class="tool-card">
-            <h2>Random String / Password Generator</h2>
-            <p>Create secure, random strings or passwords.</p>
-            
-            <label for="pass-length">Length:</label>
-            <input type="number" id="pass-length" value="16" min="4" max="128">
-            <fieldset class="grid" style="--grid-cols: 2; gap: 1rem;">
-                <label for="pass-uppercase"><input type="checkbox" id="pass-uppercase" checked> Uppercase (A-Z)</label>
-                <label for="pass-lowercase"><input type="checkbox" id="pass-lowercase" checked> Lowercase (a-z)</label>
-                <label for="pass-numbers"><input type="checkbox" id="pass-numbers" checked> Numbers (0-9)</label>
-                <label for="pass-symbols"><input type="checkbox" id="pass-symbols" checked> Symbols (!@#$)</label>
-            </fieldset>
-            <button id="pass-generate-btn">Generate</button>
-            
-            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Result:</h4>
-            
-            <div style="display: flex; gap: 0.5rem;">
-                <input type="text" id="pass-output" readonly placeholder="Your generated password will appear here..." style="flex-grow: 1;">
-                <button id="pass-copy-btn" class="secondary outline" style="width: 80px;">Copy</button>
-            </div>
-        </article>
+<li>
+<details class="dropdown">
+<summary role="button">Tools Menu</summary>
 
-        <article class="tool-card">
-            <h2>Wordlist Generator</h2>
-            <p>Create a custom wordlist based on keywords and combinations. (Note: Large lists may be slow in-browser).</p>
-            
-            <label for="wordlist-keywords">Keywords (comma separated):</label>
-            <input type="text" id="wordlist-keywords" placeholder="admin, pass, 123, !">
-            <label for="wordlist-length">Max Combination Length:</label>
-            <input type="number" id="wordlist-length" value="3" min="2" max="5">
+<ul dir="rtl">
+<li><a href="encoding.html">Encoding & Hashing</a></li>
+<li><a href="web-recon.html">Web Recon</a></li>
+<li><a href="network-recon.html">Network Recon</a></li>
+<li><a href="payloads.html">Payloads & Cheatsheets</a></li>
+<li><a href="generators.html">Generators & Misc</a></li>
+<li><a href="ctf.html">CTF & Forensics</a></li>
+</ul>
 
-            <div class="grid" style="--grid-cols: 2; gap: 1rem; margin-top: 1rem;">
-                <button id="wordlist-generate-btn" aria-busy="false">Generate Wordlist</button>
-                <button id="wordlist-download-btn" class="secondary" disabled>Download .txt</button>
-            </div>
+</details>
+</li>
 
-            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Result (Preview):</h4>
-            <textarea id="wordlist-output" rows="10" readonly placeholder="Generated wordlist will appear here..."></textarea>
-        </article>
+<li><a href="quiz.html">Quiz</a></li>
+<li><a href="../about.html">About</a></li>
 
-        <article class="tool-card">
-            <h2>cURL Command Generator</h2>
-            <p>Visually build a cURL command for testing endpoints.</p>
-            
-            <label for="curl-url">URL:</label>
-            <input type="url" id="curl-url" placeholder="https://api.example.com/data">
-            <label for="curl-method">Request Method:</label>
-            <select id="curl-method">
-                <option value="GET" selected>GET</option>
-                <option value="POST">POST</option>
-                <option value="PUT">PUT</option>
-                <option value="DELETE">DELETE</option>
-            </select>
-            <label for="curl-headers">Headers (one per line...):</label>
-            <textarea id="curl-headers" rows="3"></textarea>
-            <label for="curl-data">Data (for POST/PUT):</label>
-            <textarea id="curl-data" rows="3" placeholder='{"key": "value"}'></textarea>
-            <button id="curl-generate-btn">Generate Command</button>
-            
-            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Generated cURL Command:</h4>
-            
-            <div style="display: flex; gap: 0.5rem;">
-                <textarea id="curl-output" rows="5" readonly style="flex-grow: 1;"></textarea>
-                <button id="curl-copy-btn" class="secondary outline" style="min-width: 80px;">Copy</button>
-            </div>
-        </article>
-        
-        <article class="tool-card">
-            <h2>Regex Tester</h2>
-            <p>Test your Regular Expressions against a block of text.</p>
-            
-            <label for="regex-input">Regular Expression:</label>
-            <input type="text" id="regex-input" placeholder="/[a-zA-Z0-9]+/g">
-            <label for="regex-text">Test String:</label>
-            <textarea id="regex-text" rows="7" placeholder="The quick brown fox jumps..."></textarea>
-            <button id="regex-test-btn">Test Regex</button>
+</ul>
 
-            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Matches:</h4>
-            
-            <div style="display: flex; gap: 0.5rem; align-items: start;">
-                <pre id="regex-output" style="flex-grow: 1; margin: 0;">(No matches found)</pre>
-                <button id="regex-copy-btn" class="secondary outline" style="min-width: 80px;">Copy</button>
-            </div>
-        </article>
-        
-        <article class="tool-card">
-            <h2>JSON Formatter & Validator</h2>
-            <p>Format (pretty-print) or validate your JSON data.</p>
-            
-            <label for="json-input">JSON Input:</label>
-            <textarea id="json-input" rows="10" placeholder='{"name":"Triangle"}'></textarea>
-            <button id="json-format-btn">Format / Validate</button>
+</nav>
+</header>
 
-            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Result:</h4>
-            
-            <div style="display: flex; gap: 0.5rem; align-items: start;">
-                <pre id="json-output" style="flex-grow: 1; margin: 0;">(Output will appear here)</pre>
-                <button id="json-copy-btn" class="secondary outline" style="min-width: 80px;">Copy</button>
-            </div>
-        </article>
+<main class="container">
 
-        <article class="tool-card">
-            <h2>JWT Debugger</h2>
-            <p>Decode a JSON Web Token (JWT) to inspect its Header and Payload.</p>
-            
-            <label for="jwt-input">JWT Token:</label>
-            <textarea id="jwt-input" rows="5" placeholder="eyJhbGciOiJI..."></textarea>
-            <button id="jwt-decode-btn">Decode Token</button>
+<h1 class="page-title">Generators & Misc Tools</h1>
 
-            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Header (Decoded):</h4>
-            
-            <div style="display: flex; gap: 0.5rem; align-items: start;">
-                <pre id="jwt-header-output" style="flex-grow: 1; margin: 0;">(Decoded header...)</pre>
-                <button id="jwt-header-copy-btn" class="secondary outline" style="min-width: 80px;">Copy</button>
-            </div>
+<!-- PASSWORD -->
+<article class="tool-card">
 
-            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Payload (Decoded):</h4>
-            
-            <div style="display: flex; gap: 0.5rem; align-items: start;">
-                <pre id="jwt-payload-output" style="flex-grow: 1; margin: 0;">(Decoded payload...)</pre>
-                <button id="jwt-payload-copy-btn" class="secondary outline" style="min-width: 80px;">Copy</button>
-            </div>
-        </article>
-        
-    </main>
+<h2>Password Generator</h2>
+<p>Create secure random passwords.</p>
 
-    <footer class="container">
-        </footer>
+<label for="pass-length">Length</label>
+<input type="number" id="pass-length" value="16" min="4" max="128">
 
-    <script src="../assets/js/generators.js"></script>
+<fieldset class="grid">
+<label><input type="checkbox" id="pass-uppercase" checked> Uppercase</label>
+<label><input type="checkbox" id="pass-lowercase" checked> Lowercase</label>
+<label><input type="checkbox" id="pass-numbers" checked> Numbers</label>
+<label><input type="checkbox" id="pass-symbols" checked> Symbols</label>
+</fieldset>
+
+<button id="pass-generate-btn">Generate</button>
+
+<h4 class="output-title">Result</h4>
+
+<div class="tool-inline-output">
+<input id="pass-output" type="text" readonly>
+<button id="pass-copy-btn" class="secondary outline">Copy</button>
+</div>
+
+</article>
+
+<!-- WORDLIST -->
+<article class="tool-card">
+
+<h2>Wordlist Generator</h2>
+
+<label for="wordlist-keywords">Keywords</label>
+<input id="wordlist-keywords" type="text">
+
+<label for="wordlist-length">Max Length</label>
+<input id="wordlist-length" type="number" value="3">
+
+<div class="grid">
+<button id="wordlist-generate-btn">Generate</button>
+<button id="wordlist-download-btn" class="secondary" disabled>Download</button>
+</div>
+
+<h4 class="output-title">Preview</h4>
+<textarea id="wordlist-output" rows="10" readonly></textarea>
+
+</article>
+
+<!-- CURL -->
+<article class="tool-card">
+
+<h2>cURL Generator</h2>
+
+<label for="curl-url">URL</label>
+<input id="curl-url" type="url">
+
+<label for="curl-method">Method</label>
+<select id="curl-method">
+<option>GET</option>
+<option>POST</option>
+<option>PUT</option>
+<option>DELETE</option>
+</select>
+
+<label for="curl-headers">Headers</label>
+<textarea id="curl-headers"></textarea>
+
+<label for="curl-data">Body</label>
+<textarea id="curl-data"></textarea>
+
+<button id="curl-generate-btn">Generate</button>
+
+<div class="tool-inline-output">
+<textarea id="curl-output" rows="5" readonly></textarea>
+<button id="curl-copy-btn" class="secondary outline">Copy</button>
+</div>
+
+</article>
+
+<!-- REGEX -->
+<article class="tool-card">
+
+<h2>Regex Tester</h2>
+
+<label for="regex-input">Regex</label>
+<input id="regex-input">
+
+<label for="regex-text">Text</label>
+<textarea id="regex-text"></textarea>
+
+<button id="regex-test-btn">Test</button>
+
+<div class="tool-inline-output">
+<pre id="regex-output">(No matches)</pre>
+<button id="regex-copy-btn" class="secondary outline">Copy</button>
+</div>
+
+</article>
+
+<!-- JSON -->
+<article class="tool-card">
+
+<h2>JSON Formatter</h2>
+
+<label for="json-input">JSON Input</label>
+<textarea id="json-input"></textarea>
+
+<button id="json-format-btn">Format</button>
+
+<div class="tool-inline-output">
+<pre id="json-output">(Output)</pre>
+<button id="json-copy-btn" class="secondary outline">Copy</button>
+</div>
+
+</article>
+
+<!-- JWT -->
+<article class="tool-card">
+
+<h2>JWT Debugger</h2>
+
+<label for="jwt-input">Token</label>
+<textarea id="jwt-input"></textarea>
+
+<button id="jwt-decode-btn">Decode</button>
+
+<h4>Header</h4>
+<div class="tool-inline-output">
+<pre id="jwt-header-output">(Header)</pre>
+<button id="jwt-header-copy-btn" class="secondary outline">Copy</button>
+</div>
+
+<h4>Payload</h4>
+<div class="tool-inline-output">
+<pre id="jwt-payload-output">(Payload)</pre>
+<button id="jwt-payload-copy-btn" class="secondary outline">Copy</button>
+</div>
+
+</article>
+
+</main>
+
+<footer class="container">
+
+<p style="text-align:center; opacity:.7;">
+Project ▲ Triangle — Educational & Ethical Security Toolkit
+</p>
+
+</footer>
+
+<script src="../assets/js/generators.js"></script>
 
 </body>
 </html>
