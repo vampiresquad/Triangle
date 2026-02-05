@@ -1,62 +1,44 @@
 /* =========================================
-   Triangle Toolkit — Service Worker
+   Triangle Toolkit — ULTRA PRO PWA SW
    Author: Muhammad Shourov
-   Version: v3.0.0 (GitHub Pages Safe Build)
+   Version: v5.0.0
 ========================================= */
 
-const CACHE_VERSION = "triangle-cache-v3";
-const STATIC_CACHE = `${CACHE_VERSION}-static`;
-const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`;
+const SW_VERSION = "triangle-v5";
+const STATIC_CACHE = `${SW_VERSION}-static`;
+const HTML_CACHE = `${SW_VERSION}-html`;
 
-/* GitHub Pages Subfolder */
-const BASE_PATH = "/Triangle";
-
-/* Files to Cache */
-const STATIC_ASSETS = [
-  `${BASE_PATH}/`,
-  `${BASE_PATH}/index.html`,
-  `${BASE_PATH}/about.html`,
-
-  `${BASE_PATH}/assets/css/style.css`,
-
-  `${BASE_PATH}/assets/js/encoding.js`,
-  `${BASE_PATH}/assets/js/web-recon.js`,
-  `${BASE_PATH}/assets/js/network-recon.js`,
-  `${BASE_PATH}/assets/js/payloads.js`,
-  `${BASE_PATH}/assets/js/generators.js`,
-  `${BASE_PATH}/assets/js/ctf.js`,
-  `${BASE_PATH}/assets/js/quiz.js`,
-
-  `${BASE_PATH}/pages/encoding.html`,
-  `${BASE_PATH}/pages/web-recon.html`,
-  `${BASE_PATH}/pages/network-recon.html`,
-  `${BASE_PATH}/pages/payloads.html`,
-  `${BASE_PATH}/pages/generators.html`,
-  `${BASE_PATH}/pages/ctf.html`,
-  `${BASE_PATH}/pages/quiz.html`
+/* Static Files (SAFE ONLY) */
+const STATIC_FILES = [
+  "/Triangle/",
+  "/Triangle/index.html",
+  "/Triangle/about.html",
+  "/Triangle/assets/css/style.css"
 ];
 
-/* ================= INSTALL ================= */
+/* INSTALL */
 self.addEventListener("install", event => {
-  console.log("▲ Triangle SW Installing");
+  console.log("▲ SW Installing v5");
 
   event.waitUntil(
     caches.open(STATIC_CACHE)
-      .then(cache => cache.addAll(STATIC_ASSETS))
+      .then(cache => cache.addAll(STATIC_FILES))
       .then(() => self.skipWaiting())
   );
 });
 
-/* ================= ACTIVATE ================= */
+/* ACTIVATE */
 self.addEventListener("activate", event => {
-  console.log("▲ Triangle SW Activated");
+  console.log("▲ SW Activated v5");
 
   event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
-        keys
-          .filter(key => !key.startsWith(CACHE_VERSION))
-          .map(key => caches.delete(key))
+        keys.map(key => {
+          if (!key.includes(SW_VERSION)) {
+            return caches.delete(key);
+          }
+        })
       )
     )
   );
@@ -64,46 +46,62 @@ self.addEventListener("activate", event => {
   self.clients.claim();
 });
 
-/* ================= FETCH ================= */
+/* FETCH */
 self.addEventListener("fetch", event => {
 
+  const url = new URL(event.request.url);
+
+  /* Only handle GET */
   if (event.request.method !== "GET") return;
 
-  /* Ignore external APIs */
-  if (!event.request.url.startsWith(self.location.origin)) return;
+  /* ================= JS → NETWORK ONLY ================= */
+  if (url.pathname.endsWith(".js")) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
 
+  /* ================= API → NETWORK ONLY ================= */
+  if (url.hostname.includes("api") || url.hostname.includes("dns") || url.hostname.includes("crt")) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
+  /* ================= HTML → NETWORK FIRST ================= */
+  if (event.request.headers.get("accept").includes("text/html")) {
+
+    event.respondWith(
+      fetch(event.request)
+        .then(res => {
+          const copy = res.clone();
+          caches.open(HTML_CACHE).then(cache => cache.put(event.request, copy));
+          return res;
+        })
+        .catch(() => caches.match(event.request))
+    );
+
+    return;
+  }
+
+  /* ================= CSS / STATIC → CACHE FIRST ================= */
   event.respondWith(
     caches.match(event.request)
-      .then(cached => {
-
-        if (cached) return cached;
-
-        return fetch(event.request)
-          .then(response => {
-
-            if (!response || response.status !== 200) return response;
-
-            const clone = response.clone();
-
-            caches.open(DYNAMIC_CACHE)
-              .then(cache => cache.put(event.request, clone));
-
-            return response;
-          })
-          .catch(() => {
-
-            if (event.request.destination === "document") {
-              return caches.match(`${BASE_PATH}/index.html`);
-            }
-
+      .then(cacheRes => {
+        return cacheRes || fetch(event.request)
+          .then(netRes => {
+            const copy = netRes.clone();
+            caches.open(STATIC_CACHE).then(cache => cache.put(event.request, copy));
+            return netRes;
           });
       })
   );
+
 });
 
-/* ================= MESSAGE ================= */
+/* ================= UPDATE MESSAGE SYSTEM ================= */
 self.addEventListener("message", event => {
+
   if (event.data === "SKIP_WAITING") {
     self.skipWaiting();
   }
+
 });
