@@ -151,12 +151,15 @@ Project ▲ Triangle. All tools are for educational and ethical purposes only.
 </footer>
 <script>
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker
-      .register("/sw.js")
-      .then(() => console.log("▲ Triangle SW Registered"))
-      .catch(err => console.log("SW Error:", err));
+
+  navigator.serviceWorker.register("/Triangle/sw.js");
+
+  navigator.serviceWorker.addEventListener("message", event => {
+    if (event.data === "NEW_VERSION") {
+      alert("New update available! Refresh page.");
+    }
   });
+
 }
 </script>
 </body>
